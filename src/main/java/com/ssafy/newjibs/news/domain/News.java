@@ -44,5 +44,6 @@ public class News {
 	@Column(nullable = false)
 	private String content;
 
+	@Lob
 	private String writer;
 }

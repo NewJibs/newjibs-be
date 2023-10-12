@@ -28,13 +28,13 @@ public class NewsController {
 		return new BaseResponse<>(ResponseStatus.SUCCESS, list);
 	}
 
-	@GetMapping("{/articleId}")
+	@GetMapping("/{articleId}")
 	public BaseResponse<NewsContentDto> getNewsContent(@PathVariable String articleId) {
 		NewsContentDto newsContentDto = newsService.readNews(articleId);
 		return new BaseResponse<>(ResponseStatus.SUCCESS, newsContentDto);
 	}
 
-	@DeleteMapping("{/articleId}")
+	@DeleteMapping("/{articleId}")
 	public BaseResponse<Void> removeNews(@PathVariable String articleId) {
 		newsService.deleteNews(articleId);
 		return new BaseResponse<>(ResponseStatus.SUCCESS);
