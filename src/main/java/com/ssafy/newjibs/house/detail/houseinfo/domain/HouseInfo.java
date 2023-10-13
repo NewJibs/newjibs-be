@@ -21,7 +21,7 @@ public class HouseInfo {
     @Column(nullable = false)
     private Long aptCode;
     @ManyToOne// N : 1 관계
-    @JoinColumn(name = "dongcode")
+    @JoinColumn(name = "dongCode")
     private DongCode dongCode;
     private Integer buildYear;
     private String roadNameBonBun;
