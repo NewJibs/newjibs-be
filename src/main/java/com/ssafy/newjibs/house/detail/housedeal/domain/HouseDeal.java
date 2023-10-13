@@ -28,5 +28,4 @@ public class HouseDeal {
     private String area;
     private String floor;
     private String cancelDealType;
-    private Integer aptCode;
 }
