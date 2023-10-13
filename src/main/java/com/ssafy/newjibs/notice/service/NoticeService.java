@@ -5,6 +5,7 @@ import com.ssafy.newjibs.notice.dto.NoticeDto;
 import com.ssafy.newjibs.notice.dto.NoticeListDto;
 import com.ssafy.newjibs.notice.repository.NoticeRepository;
 import com.ssafy.newjibs.notice.util.NoticeMapper;
+import com.ssafy.newjibs.notice.util.NoticeUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +19,13 @@ import java.util.stream.Collectors;
 public class NoticeService {
     private final NoticeRepository noticeRepository;
     private final NoticeMapper noticeMapper;
+    private final NoticeUtility noticeUtility;
 
     public void createNotice(NoticeDto noticeDto) {
         Notice notice = noticeMapper.toEntity(noticeDto);
+        if (!noticeUtility.isAdministrator(noticeDto.getAuthor())) {// todo: verify with login member's auth
+            throw new RuntimeException();// exception (403 forbidden)
+        }
         noticeRepository.save(notice);
     }
 
