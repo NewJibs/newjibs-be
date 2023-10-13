@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ResponseStatus {
     // 2xx: Success
-    SUCCESS(200, "Success"),
+    SUCCESS(200, "OK"),
     CREATED(201, "Created"),
     ACCEPTED(202, "Accepted"),
     NO_CONTENT(204, "No Content"),
