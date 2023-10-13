@@ -22,8 +22,6 @@ public class DongCode {
     private String sidoName;
     private String gugunName;
     private String dongName;
-
-    @OneToMany(mappedBy = "dongcode", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "dongCode", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HouseInfo> houseInfos;
-
 }
