@@ -33,6 +33,8 @@ public class NewsMapper {
 			.mainPageTitle(newsTitleDto.getMainPageTitle())
 			.contentTitle(newsContentDto.getContentTitle())
 			.content(newsContentDto.getContent())
+			.imageUrl(newsContentDto.getImageUrl())
+			.imageDesc(newsContentDto.getImageDesc())
 			.writer(newsContentDto.getWriter())
 			.build();
 	}
