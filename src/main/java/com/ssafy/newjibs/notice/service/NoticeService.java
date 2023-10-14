@@ -35,7 +35,7 @@ public class NoticeService {
     }
 
     public List<NoticeListDto> readAllNotice() {
-        return noticeRepository.findAll()
+        return noticeRepository.findAllByIsDeletedFalse()
                 .stream()
                 .map(noticeMapper::toListDto)
                 .collect(Collectors.toList());
@@ -48,6 +48,7 @@ public class NoticeService {
     }
 
     public void deleteNotice(Long noticeId) {
-        noticeRepository.delete(noticeRepository.findByNoticeId(noticeId).orElseThrow(RuntimeException::new));// exception
+        Notice notice = noticeRepository.findByNoticeId(noticeId).orElseThrow(RuntimeException::new);// exception
+        notice.setIsDeleted(true);// soft deletion
     }
 }

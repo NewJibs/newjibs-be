@@ -35,4 +35,7 @@ public class Notice {
     @Column(nullable = false, columnDefinition = "DATETIME(0)")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime date;
+
+    @Column(nullable = false)
+    private Boolean isDeleted;
 }
