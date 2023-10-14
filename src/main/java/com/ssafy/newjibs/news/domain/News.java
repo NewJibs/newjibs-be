@@ -6,6 +6,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
+import org.springframework.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,9 +43,11 @@ public class News {
 	private String contentTitle;
 
 	@Column
+	@Nullable
 	private String imageUrl;
 
 	@Column
+	@Nullable
 	private String imageDesc;
 
 	@Lob// set type to CLOB
@@ -51,5 +55,9 @@ public class News {
 	private String content;
 
 	@Lob
+	@Nullable
 	private String writer;
+
+	@Column(nullable = false)
+	private Boolean isDeleted;
 }

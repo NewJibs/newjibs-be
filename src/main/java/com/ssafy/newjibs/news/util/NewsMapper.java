@@ -36,6 +36,7 @@ public class NewsMapper {
 			.imageUrl(newsContentDto.getImageUrl())
 			.imageDesc(newsContentDto.getImageDesc())
 			.writer(newsContentDto.getWriter())
+			.isDeleted(false)
 			.build();
 	}
 

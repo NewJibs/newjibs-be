@@ -10,7 +10,7 @@ import com.ssafy.newjibs.news.domain.News;
 public interface NewsRepository extends JpaRepository<News, Long> {
 	Optional<News> findByArticleId(String articleId);
 
-	List<News> findAll();
+	List<News> findAllByIsDeletedFalse();
 
 	Boolean existsByArticleId(String articleId);
 }

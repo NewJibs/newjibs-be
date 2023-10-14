@@ -30,7 +30,7 @@ public class NewsService {
 	}
 
 	public List<NewsTitleDto> readAllNews() {
-		return newsRepository.findAll()
+		return newsRepository.findAllByIsDeletedFalse()
 			.stream()
 			.map(newsMapper::toTitleDto)
 			.collect(Collectors.toList());
@@ -42,6 +42,7 @@ public class NewsService {
 	}
 
 	public void deleteNews(String articleId) {
-		newsRepository.delete(newsRepository.findByArticleId(articleId).orElseThrow(RuntimeException::new));// exception
+		News news = newsRepository.findByArticleId(articleId).orElseThrow(RuntimeException::new);// exception
+		news.setIsDeleted(true);// soft deletion
 	}
 }
