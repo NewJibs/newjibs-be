@@ -34,22 +34,17 @@ public class WebCrawler {
 				continue;
 			}
 			String contentUrl = urlBuilder.getNewsContentUrl(newsTitleDto);
-			NewsContentDto newsContentDto = crawlNewsContent(contentUrl, newsTitleDto);
+			NewsContentDto newsContentDto = crawlNewsContent(newsTitleDto, contentUrl);
 			newsService.createNews(newsTitleDto, newsContentDto);
 		}
 	}
 
 	public List<NewsTitleDto> crawlNewsTitles() {
-		return newsParser.parseNewsTitles(readScriptWithJson(UrlSrc.BASE_URL.getUrl()));
+		return newsParser.parseJson(readScriptWithJson(UrlSrc.BASE_URL.getUrl()));
 	}
 
-	public NewsContentDto crawlNewsContent(String contentUrl, NewsTitleDto newsTitleDto) {
-		Document document = readDocument(contentUrl);
-		// get json data on script block
-		String title = document.select(".news_head_title").html();// title
-		String content = document.select("[class^=article_type]").html();// content
-
-		return newsParser.parseNewsContent(title, content, newsTitleDto);
+	public NewsContentDto crawlNewsContent(NewsTitleDto newsTitleDto, String contentUrl) {
+		return newsParser.parseHtml(newsTitleDto, readDocument(contentUrl));
 	}
 
 	private String readScriptWithJson(String url) {
