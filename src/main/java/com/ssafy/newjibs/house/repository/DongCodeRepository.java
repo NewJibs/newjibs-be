@@ -1,6 +1,6 @@
-package com.ssafy.newjibs.house.detail.dongcode.repository;
+package com.ssafy.newjibs.house.repository;
 
-import com.ssafy.newjibs.house.detail.dongcode.domain.DongCode;
+import com.ssafy.newjibs.house.domain.DongCode;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

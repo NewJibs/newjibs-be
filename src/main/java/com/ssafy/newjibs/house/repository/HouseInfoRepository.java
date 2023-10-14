@@ -1,6 +1,6 @@
-package com.ssafy.newjibs.house.detail.houseinfo.repository;
+package com.ssafy.newjibs.house.repository;
 
-import com.ssafy.newjibs.house.detail.houseinfo.domain.HouseInfo;
+import com.ssafy.newjibs.house.domain.HouseInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

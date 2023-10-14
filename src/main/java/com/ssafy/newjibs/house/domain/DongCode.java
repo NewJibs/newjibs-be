@@ -1,6 +1,5 @@
-package com.ssafy.newjibs.house.detail.dongcode.domain;
+package com.ssafy.newjibs.house.domain;
 
-import com.ssafy.newjibs.house.detail.houseinfo.domain.HouseInfo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
