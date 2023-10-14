@@ -33,6 +33,12 @@ public class NewsDto {
 	@JsonProperty("contentTitle")
 	private String contentTitle;
 
+	@JsonProperty("imageUrl")
+	private String imageUrl;
+
+	@JsonProperty("imageDesc")
+	private String imageDesc;
+
 	@JsonProperty("content")
 	private String content;
 

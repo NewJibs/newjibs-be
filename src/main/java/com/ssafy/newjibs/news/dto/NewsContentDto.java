@@ -13,22 +13,29 @@ import lombok.NoArgsConstructor;
 @Builder
 public class NewsContentDto {
 	@JsonProperty("articleId")
-	String articleId;
+	private String articleId;
 
 	@JsonProperty("datetime")
-	String datetime;
+	private String datetime;
 
 	@JsonProperty("dayOfTheWeek")
-	String dayOfTheWeek;
+	private String dayOfTheWeek;
 
 	@JsonProperty("officeHname")
-	String officeHname;
+	private String officeHname;
 
 	@JsonProperty("title")
-	String contentTitle;
+	private String contentTitle;
+
+	@JsonProperty("imageUrl")
+	private String imageUrl;
+
+	@JsonProperty("imageDesc")
+	private String imageDesc;
 
 	@JsonProperty("content")
-	String content;
-	
-	String writer;
+	private String content;
+
+	@JsonProperty("writer")
+	private String writer;
 }

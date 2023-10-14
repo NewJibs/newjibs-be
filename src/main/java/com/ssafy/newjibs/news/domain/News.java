@@ -40,6 +40,12 @@ public class News {
 	@Column(nullable = false)
 	private String contentTitle;
 
+	@Column
+	private String imageUrl;
+
+	@Column
+	private String imageDesc;
+
 	@Lob// set type to CLOB
 	@Column(nullable = false)
 	private String content;
