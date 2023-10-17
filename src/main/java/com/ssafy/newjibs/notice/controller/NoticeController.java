@@ -35,7 +35,7 @@ public class NoticeController {
     }
 
     @PatchMapping("/{noticeId}")
-    public BaseResponse<Void> modifyNotice(@PathVariable Long noticeId, NoticeDto noticeDto) {
+    public BaseResponse<Void> modifyNotice(@PathVariable Long noticeId, @RequestBody NoticeDto noticeDto) {
         noticeService.updateNotice(noticeId, noticeDto);
         return new BaseResponse<>(ResponseStatus.SUCCESS);
     }
