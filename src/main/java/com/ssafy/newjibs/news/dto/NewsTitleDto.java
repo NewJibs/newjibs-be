@@ -29,4 +29,7 @@ public class NewsTitleDto {
 
 	@JsonProperty("title")
 	String mainPageTitle;
+
+	@JsonProperty("imageUrl")
+	private String imageUrl;
 }
