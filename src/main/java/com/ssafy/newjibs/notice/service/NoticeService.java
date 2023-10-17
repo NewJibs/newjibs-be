@@ -44,7 +44,7 @@ public class NoticeService {
     public void updateNotice(Long noticeId, NoticeDto noticeDto) {
         Notice notice = noticeRepository.findByNoticeId(noticeId).orElseThrow(RuntimeException::new);// exception
         notice.setTitle(noticeDto.getTitle());
-        notice.setContent(notice.getContent());// dirty checking
+        notice.setContent(noticeDto.getContent());// dirty checking
     }
 
     public void deleteNotice(Long noticeId) {
