@@ -1,5 +1,6 @@
 package com.ssafy.newjibs.news.controller;
 
+import com.ssafy.newjibs.crawler.WebCrawler;
 import com.ssafy.newjibs.news.dto.NewsContentDto;
 import com.ssafy.newjibs.news.dto.NewsTitleDto;
 import com.ssafy.newjibs.news.service.NewsService;
@@ -15,6 +16,13 @@ import java.util.List;
 @RequestMapping("/v1/news")
 public class NewsController {
     private final NewsService newsService;
+    private final WebCrawler webCrawler;
+
+    @GetMapping("/test/crawling")
+    public BaseResponse<Void> crawlNews() {
+        webCrawler.crawlAndSaveNews();
+        return new BaseResponse<>(ResponseStatus.SUCCESS);
+    }
 
     @GetMapping
     public BaseResponse<List<NewsTitleDto>> getAllNewsTitles() {
