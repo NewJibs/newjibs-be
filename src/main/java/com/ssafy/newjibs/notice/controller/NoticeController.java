@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/notices")
+@RequestMapping("/v1/notices")
 public class NoticeController {
     private final NoticeService noticeService;
 

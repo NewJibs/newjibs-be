@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/houses")
+@RequestMapping("/v1/houses")
 public class HouseController {
     private final HouseService houseService;
 
