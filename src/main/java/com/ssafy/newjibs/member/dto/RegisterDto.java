@@ -1,5 +1,7 @@
 package com.ssafy.newjibs.member.dto;
 
+import java.util.Set;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 
@@ -28,9 +30,11 @@ public class RegisterDto {
 	private String name;
 
 	@JsonProperty("birth")
-	@Pattern(regexp = "^(19|20)\\d\\d(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$", message = "Invalid date of birth format")
+	@Pattern(regexp = "^(19|20)\\d\\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", message = "Invalid date of birth format")
 	private String birth;
 
 	@JsonProperty("member_image")
 	private String memberImage;
+
+	private Set<AuthorityDto> authorityDtoSet;
 }
