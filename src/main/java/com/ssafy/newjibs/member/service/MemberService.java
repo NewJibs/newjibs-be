@@ -1,18 +1,18 @@
 package com.ssafy.newjibs.member.service;
 
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ssafy.newjibs.config.jwt.JwtTokenProvider;
+import com.ssafy.newjibs.exception.BaseException;
+import com.ssafy.newjibs.exception.ErrorCode;
+import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
-import com.ssafy.newjibs.member.dto.LoginDto;
+import com.ssafy.newjibs.member.dto.MemberDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.repository.MemberRepository;
 import com.ssafy.newjibs.member.util.MemberMapper;
+import com.ssafy.newjibs.member.util.SecurityUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,30 +21,32 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService {
 	private final MemberRepository memberRepository;
+	private final PasswordEncoder passwordEncoder;
 	private final MemberMapper memberMapper;
-	private final BCryptPasswordEncoder encoder;
-	private final AuthenticationManagerBuilder authenticationManagerBuilder;
-	private final JwtTokenProvider jwtTokenProvider;
 
-	public Long register(RegisterDto registerDto) {
-		boolean isExist = memberRepository.existsByEmail(registerDto.getEmail());
-		if (isExist) {
-			// throw 409
+	public MemberDto register(RegisterDto registerDto) {
+		if (memberRepository.existsByEmail(registerDto.getEmail())) {
+			throw new BaseException(ErrorCode.DUPLICATED_EMAIL);
 		}
-		String encPwd = encoder.encode(registerDto.getPassword());
-		Member member = memberRepository.save(memberMapper.toEntity(registerDto, encPwd));
 
-		return member.getMemberId();
+		Authority authority = Authority.builder()
+			.authorityName("ROLE_USER")
+			.build();
+
+		Member member = memberMapper.toEntity(registerDto, passwordEncoder.encode(registerDto.getPassword()), authority);
+
+		return memberMapper.toDto(memberRepository.save(member));
 	}
 
-	public String login(LoginDto loginDto) {
-		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-			loginDto.getEmail(), loginDto.getPassword());
+	public MemberDto getMemberWithAuthorities(String email) {
+		return memberMapper.toDto(
+			memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND)));
+	}
 
-		// verification
-		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-
-		// generate jwt token and return
-		return jwtTokenProvider.generateToken(authentication);
+	public MemberDto getMyMemberWithAuthorities() {
+		return memberMapper.toDto(SecurityUtil.getCurrentEmail()
+			.flatMap(memberRepository::findOneWithAuthoritiesByEmail)
+			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND))
+		);
 	}
 }
