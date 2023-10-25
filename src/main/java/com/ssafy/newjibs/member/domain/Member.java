@@ -63,16 +63,7 @@ public class Member {
 	@Enumerated(EnumType.STRING)
 	private Role role;
 
-	@Column(name = "provider")
-	private String provider;
-
-	@Column(name = "is_deleted", nullable = false)
+	@Column(name = "activated", nullable = false)
 	@NotNull
-	private Boolean isDeleted;
-
-	public Member update(String name, String provider) {
-		this.name = name;
-		this.provider = provider;
-		return this;
-	}
+	private Boolean activated;
 }
