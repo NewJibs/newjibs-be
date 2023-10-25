@@ -2,20 +2,20 @@ package com.ssafy.newjibs.member.domain;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.ssafy.newjibs.member.options.Role;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,23 +47,26 @@ public class Member {
 
 	@Column(name = "birth", nullable = false)
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate birth;
 
 	@Column(name = "join_date", nullable = false, columnDefinition = "DATETIME(0)")
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime joinDate;
 
 	@Column(name = "member_image")
 	private String memberImage;
 
-	@Column(name = "role", nullable = false)
-	@NotNull
-	@Enumerated(EnumType.STRING)
-	private Role role;
-
 	@Column(name = "activated", nullable = false)
 	@NotNull
 	private Boolean activated;
+
+	@ManyToMany
+	@JoinTable(
+		name = "member_authority",
+		joinColumns = {@JoinColumn(name = "member_id")},
+		inverseJoinColumns = {@JoinColumn(name = "authority_name")}
+	)
+	private Set<Authority> authorities;
 }
