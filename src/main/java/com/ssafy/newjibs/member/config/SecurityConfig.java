@@ -1,5 +1,8 @@
 package com.ssafy.newjibs.member.config;
 
+import com.ssafy.newjibs.member.jwt.JwtAccessDeniedHandler;
+import com.ssafy.newjibs.member.jwt.JwtAuthenticationEntryPoint;
+import com.ssafy.newjibs.member.jwt.TokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -12,10 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
-
-import com.ssafy.newjibs.member.jwt.JwtAccessDeniedHandler;
-import com.ssafy.newjibs.member.jwt.JwtAuthenticationEntryPoint;
-import com.ssafy.newjibs.member.jwt.TokenProvider;
 
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -56,8 +55,11 @@ public class SecurityConfig {
 
 			.authorizeHttpRequests(
 				authorizeHttpRequests -> authorizeHttpRequests
-					.antMatchers("/v1/members/login", "/v1/members/register").permitAll()
-					.anyRequest().authenticated()
+//						.antMatchers("/v1/members/login", "/v1/members/register")
+//						.permitAll()
+//						.anyRequest().authenticated()
+						.anyRequest().permitAll()
+
 			)
 
 			.sessionManagement(sessionManagement ->
