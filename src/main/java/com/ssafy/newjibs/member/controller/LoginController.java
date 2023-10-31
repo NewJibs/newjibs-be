@@ -2,6 +2,7 @@ package com.ssafy.newjibs.member.controller;
 
 import javax.validation.Valid;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,7 @@ public class LoginController {
 	private final TokenProvider tokenProvider;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
+	@ApiOperation(value = "로그인")
 	@PostMapping("/login")
 	public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
 		UsernamePasswordAuthenticationToken authenticationToken =
