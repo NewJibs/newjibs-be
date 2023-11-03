@@ -27,7 +27,7 @@ spring:
       mode: always
 
   profiles:
-    active: jwt
+    active: jwt, api
 
 logging:
   level:
