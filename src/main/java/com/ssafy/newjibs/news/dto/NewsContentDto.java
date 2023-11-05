@@ -15,26 +15,26 @@ public class NewsContentDto {
 	@JsonProperty("articleId")
 	private String articleId;
 
-	@JsonProperty("datetime")
-	private String datetime;
-
-	@JsonProperty("dayOfTheWeek")
-	private String dayOfTheWeek;
-
-	@JsonProperty("officeHname")
-	private String officeHname;
+	@JsonProperty("pressCorporationName")
+	private String pressCorporationName;
 
 	@JsonProperty("title")
-	private String contentTitle;
+	private String title;
+
+	@JsonProperty("publishDateTime")
+	private String publishDateTime;
+
+	@JsonProperty("contentSummary")
+	private String contentSummary;
+
+	@JsonProperty("content")
+	private String content;
 
 	@JsonProperty("imageUrl")
 	private String imageUrl;
 
 	@JsonProperty("imageDesc")
 	private String imageDesc;
-
-	@JsonProperty("content")
-	private String content;
 
 	@JsonProperty("writer")
 	private String writer;
