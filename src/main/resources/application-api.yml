@@ -1,0 +1,2 @@
+open-api:
+  service-key: ${OPEN_API_SERVICE_KEY}
