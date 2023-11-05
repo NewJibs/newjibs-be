@@ -1,5 +1,8 @@
 package com.ssafy.newjibs.news.dto;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -11,37 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NewsDto {
-	@JsonProperty("articleId")
-	private String articleId;
-
-	@JsonProperty("datetime")
-	private String datetime;
-
-	@JsonProperty("dayOfTheWeek")
-	private String dayOfTheWeek;
-
-	@JsonProperty("officeHname")
-	private String officeHname;
-
-	@JsonProperty("officeId")
-	private String officeId;
-
-	@JsonProperty("mainPageTitle")
-	private String mainPageTitle;
-
-	@JsonProperty("contentTitle")
-	private String contentTitle;
-
-	@JsonProperty("imageUrl")
-	private String imageUrl;
-
-	@JsonProperty("imageDesc")
-	private String imageDesc;
-
-	@JsonProperty("content")
-	private String content;
-
-	@JsonProperty("writer")
-	private String writer;
+	@JsonProperty("list")
+	private List<NewsTitleDto> list;
 }
