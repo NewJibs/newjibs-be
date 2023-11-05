@@ -25,7 +25,7 @@ public class NewsService {
 		if (newsRepository.existsByArticleId(newsTitleDto.getArticleId())) {
 			return;
 		}
-		News news = newsMapper.eachDtosToEntity(newsTitleDto, newsContentDto);
+		News news = newsMapper.dtosToEntity(newsTitleDto, newsContentDto);
 		newsRepository.save(news);
 	}
 
