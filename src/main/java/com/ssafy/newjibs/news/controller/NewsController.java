@@ -1,8 +1,8 @@
 package com.ssafy.newjibs.news.controller;
 
+import java.io.IOException;
 import java.util.List;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,7 @@ import com.ssafy.newjibs.news.dto.NewsContentDto;
 import com.ssafy.newjibs.news.dto.NewsTitleDto;
 import com.ssafy.newjibs.news.service.NewsService;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,10 +25,17 @@ public class NewsController {
 	private final NewsService newsService;
 	private final WebCrawler webCrawler;
 
-	@ApiOperation(value = "뉴스 크롤링 테스트")
-	@GetMapping("/test/crawling")
-	public ResponseEntity<Void> crawlNews() {
-		webCrawler.crawlAndSaveNews();
+	@ApiOperation(value = "오늘 뉴스 크롤링 테스트")
+	@GetMapping("/test/crawling/today")
+	public ResponseEntity<Void> crawlTodayNews() throws IOException {
+		webCrawler.crawlTodayNews();
+		return ResponseEntity.ok().build();
+	}
+
+	@ApiOperation(value = "지난 6일 뉴스 크롤링 테스트")
+	@GetMapping("/test/crawling/before")
+	public ResponseEntity<Void> crawlBeforeNews() throws IOException {
+		webCrawler.crawlBeforeNews();
 		return ResponseEntity.ok().build();
 	}
 
