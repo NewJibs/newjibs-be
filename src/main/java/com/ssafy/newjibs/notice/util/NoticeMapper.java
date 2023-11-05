@@ -31,6 +31,7 @@ public class NoticeMapper {
 
 	public NoticeListDto toListDto(Notice notice) {
 		return NoticeListDto.builder()
+			.noticeId(notice.getNoticeId())
 			.title(notice.getTitle())
 			.author(notice.getAuthor())
 			.date(notice.getDate())
