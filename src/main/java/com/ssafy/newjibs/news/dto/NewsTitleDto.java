@@ -1,5 +1,6 @@
 package com.ssafy.newjibs.news.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -11,25 +12,26 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class NewsTitleDto {
 	@JsonProperty("articleId")
-	String articleId;
+	private String articleId;
 
-	@JsonProperty("datetime")
-	String datetime;
-
-	@JsonProperty("dayOfTheWeek")
-	String dayOfTheWeek;
-
-	@JsonProperty("officeHname")
-	String officeHname;
-
-	@JsonProperty("officeId")
-	String officeId;
+	@JsonProperty("pressCorporationName")
+	private String pressCorporationName;
 
 	@JsonProperty("title")
-	String mainPageTitle;
+	private String title;
 
-	@JsonProperty("imageUrl")
-	private String imageUrl;
+	@JsonProperty("summaryContent")
+	private String summaryContent;
+
+	@JsonProperty("linkUrl")
+	private String linkUrl;
+
+	@JsonProperty("thumbnail")
+	private String thumbnail;
+
+	@JsonProperty("publishDateTime")
+	private String publishDateTime;
 }
