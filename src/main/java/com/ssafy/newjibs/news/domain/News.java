@@ -24,37 +24,41 @@ public class News {
 	@Column(nullable = false)
 	private String articleId;// use article's generated id
 
-	@Column(nullable = false, columnDefinition = "DATE") // set String to DATE on column
-	private String datetime;
+	@Column(nullable = false)
+	private String pressCorporationName;
 
 	@Column(nullable = false)
-	private String dayOfTheWeek;
+	private String title;
+
+	@Lob
+	@Column(nullable = false)
+	private String summaryContent;// summary on title
 
 	@Column(nullable = false)
-	private String officeHname;
+	private String linkUrl;
 
 	@Column(nullable = false)
-	private String officeId;
+	private String thumbnail;
+
+	@Column(nullable = false, columnDefinition = "DATETIME") // set String to DATETIME on column
+	private String publishDateTime;
 
 	@Column(nullable = false)
-	private String mainPageTitle;
+	private String contentSummary;// summary on content
 
+	@Lob
 	@Column(nullable = false)
-	private String contentTitle;
+	private String content;
 
 	@Column
 	@Nullable
 	private String imageUrl;
 
+	@Lob
 	@Column
 	@Nullable
 	private String imageDesc;
 
-	@Lob// set type to CLOB
-	@Column(nullable = false)
-	private String content;
-
-	@Lob
 	@Nullable
 	private String writer;
 
