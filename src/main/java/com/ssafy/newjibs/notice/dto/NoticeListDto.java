@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class NoticeListDto {
+    @JsonProperty("noticeId")
+    private Long noticeId;
+
     @JsonProperty("title")
     private String title;
 
