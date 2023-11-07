@@ -2,6 +2,7 @@ package com.ssafy.newjibs.crawler;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -28,9 +29,10 @@ public class WebCrawler {
 	private final NewsService newsService;
 	private final NewsRepository newsRepository;
 	private final NewsParser newsParser;
+	private final LocalDate now = LocalDateTime.now().plusHours(0).toLocalDate();
 
 	public void crawlBeforeNews() throws IOException {
-		LocalDate endDate = LocalDate.now().minusDays(1);
+		LocalDate endDate = now.minusDays(1);
 		LocalDate startDate = endDate.minusDays(6);
 
 		for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
@@ -47,7 +49,7 @@ public class WebCrawler {
 	}
 
 	public void crawlTodayNews() throws IOException {
-		List<NewsTitleDto> titleList = crawlNewsTitles(LocalDate.now());
+		List<NewsTitleDto> titleList = crawlNewsTitles(now);
 		for (NewsTitleDto newsTitleDto : titleList) {
 			if (newsRepository.existsByArticleId(newsTitleDto.getArticleId())) {
 				continue;
