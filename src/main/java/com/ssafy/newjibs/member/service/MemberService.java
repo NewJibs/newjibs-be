@@ -1,5 +1,7 @@
 package com.ssafy.newjibs.member.service;
 
+import static com.ssafy.newjibs.member.options.AuthorityConstant.*;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,7 @@ public class MemberService {
 		}
 
 		Authority authority = Authority.builder()
-			.authorityName("ROLE_USER")
+			.authorityName(USER.getRole())
 			.build();
 
 		Member member = memberMapper.toEntity(registerDto, passwordEncoder.encode(registerDto.getPassword()), authority);
