@@ -2,6 +2,8 @@ package com.ssafy.newjibs.house.domain;
 
 import java.util.List;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 @Entity
+@Access(AccessType.FIELD)
 @Builder
 @Data
 @AllArgsConstructor
@@ -24,62 +27,67 @@ import lombok.RequiredArgsConstructor;
 @Table(name = "houseinfo")
 public class HouseInfo {
 	@Id
-	@Column(nullable = false)
+	@Column(name = "aptCode", nullable = false)
 	private Long aptCode;
 
-	@ManyToOne
-	@JoinColumn(name = "dongCode")
-	private DongCode dongCode;
-
-	@Column(nullable = false)
+	@Column(name = "buildYear")
 	private Integer buildYear;
 
-	@Column(nullable = false)
+	@Column(name = "roadName")
+	private String roadName;
+
+	@Column(name = "roadNameBonBun")
 	private String roadNameBonBun;
 
-	@Column(nullable = false)
+	@Column(name = "roadNameBubun")
 	private String roadNameBubun;
 
-	@Column(nullable = false)
+	@Column(name = "roadNameSeq")
 	private String roadNameSeq;
 
-	@Column(nullable = false)
+	@Column(name = "roadNameBasementCode")
 	private String roadNameBasementCode;
 
-	@Column(nullable = false)
+	@Column(name = "roadNameCode")
 	private String roadNameCode;
 
-	@Column(nullable = false)
+	@Column(name = "dong")
 	private String dong;
 
-	@Column(nullable = false)
+	@Column(name = "bonbun")
 	private String bonbun;
 
-	@Column(nullable = false)
+	@Column(name = "bubun")
 	private String bubun;
 
-	@Column(nullable = false)
+	@Column(name = "sigunguCode")
 	private String sigunguCode;
 
-	@Column(nullable = false)
+	@Column(name = "eubmyundongCode")
 	private String eubmyundongCode;
 
-	@Column(nullable = false)
+	// @ManyToOne
+	// @JoinColumn(name = "dongCode")
+	// private DongCode dongCode;
+
+	@JoinColumn(name = "dongCode")
+	private String dongCode;
+
+	@Column(name = "landCode")
 	private String landCode;
 
-	@Column(nullable = false)
+	@Column(name = "apartmentName")
 	private String apartmentName;
 
-	@Column(nullable = false)
+	@Column(name = "jibun")
 	private String jibun;
 
-	@Column(nullable = false)
+	@Column(name = "lng")
 	private String lng;
 
-	@Column(nullable = false)
+	@Column(name = "lat")
 	private String lat;
 
-	@Column(nullable = false)
-	@OneToMany(mappedBy = "houseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<HouseDeal> houseDeals;
+	// @OneToMany(mappedBy = "houseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+	// private List<HouseDeal> houseDeals;
 }
