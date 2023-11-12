@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class WebCrawlerScheduler {
 	private final WebCrawler webCrawler;
 
-	@Scheduled(cron = "0 0 * * * ?") // execute every hour
+	@Scheduled(cron = "0 0 */6 * * ?") // execute every six hours
 	public void crawlData() throws IOException {
 		webCrawler.crawlTodayNews();
 	}
