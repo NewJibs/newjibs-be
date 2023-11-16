@@ -33,8 +33,8 @@ public class MemberDto {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDateTime joinDate;
 
-	@JsonProperty("member_image")
-	private String memberImage;
+	@JsonProperty("image_url")
+	private String imageUrl;
 
 	private Set<AuthorityDto> authorityDtoSet;
 }
