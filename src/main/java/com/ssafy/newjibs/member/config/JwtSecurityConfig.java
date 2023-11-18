@@ -7,18 +7,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.ssafy.newjibs.member.jwt.JwtFilter;
 import com.ssafy.newjibs.member.jwt.TokenProvider;
+import com.ssafy.newjibs.member.service.RedisService;
 
 public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
-	private TokenProvider tokenProvider;
+	private final TokenProvider tokenProvider;
+	private final RedisService redisService;
 
-	public JwtSecurityConfig(TokenProvider tokenProvider) {
+	public JwtSecurityConfig(TokenProvider tokenProvider, RedisService redisService) {
 		this.tokenProvider = tokenProvider;
+		this.redisService = redisService;
 	}
 
 	@Override
 	public void configure(HttpSecurity http) {
 		http.addFilterBefore(
-			new JwtFilter(tokenProvider),
+			new JwtFilter(tokenProvider, redisService),
 			UsernamePasswordAuthenticationFilter.class
 		);
 	}

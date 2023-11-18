@@ -47,10 +47,7 @@ public class HouseDeal {
 	@Column(name = "cancelDealType")
 	private String cancelDealType;
 
-	// @ManyToOne
-	// @JoinColumn(name = "aptCode")
-	// private HouseInfo houseInfo;
-
+	@ManyToOne
 	@JoinColumn(name = "aptCode")
-	private Long aptCode;
+	private HouseInfo houseInfo;
 }

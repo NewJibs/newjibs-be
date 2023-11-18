@@ -11,6 +11,7 @@ spring:
 #    url: jdbc:mysql://localhost:3306/newjibs?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 #    username: takealook
 #    password: '0205'
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -18,7 +19,7 @@ spring:
   jpa:
     #open-in-view: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 #    show-sql: true
@@ -28,8 +29,14 @@ spring:
         show-sql: true
     defer-datasource-initialization: true
 
+  redis:
+#    host: -- server address --
+    host: 127.0.0.1
+    port: 6379
+
   sql:
     init:
+#      mode: never
       mode: always
 
   profiles:
@@ -42,3 +49,15 @@ logging:
         orm:
           jpa: DEBUG
     com.ssafy.newjibs: DEBUG
+
+cloud:
+  aws:
+    s3:
+      bucket: ${S3_BUCKET}
+    credentials:
+      access-key: ${S3_ACCESS_KEY}
+      secret-key: ${S3_SECRET_KEY}
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false

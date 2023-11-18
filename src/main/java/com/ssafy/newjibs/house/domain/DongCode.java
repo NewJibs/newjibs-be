@@ -36,6 +36,6 @@ public class DongCode {
 	@Column(name = "dongName")
 	private String dongName;
 
-	// @OneToMany(mappedBy = "dongCode", cascade = CascadeType.ALL, orphanRemoval = true)
-	// private List<HouseInfo> houseInfos;
+	@OneToMany(mappedBy = "dongCode", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<HouseInfo> houseInfos;
 }

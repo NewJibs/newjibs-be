@@ -55,8 +55,8 @@ public class Member {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime joinDate;
 
-	@Column(name = "member_image")
-	private String memberImage;
+	@Column(name = "image_url")
+	private String imageUrl;
 
 	@Column(name = "activated", nullable = false)
 	@NotNull

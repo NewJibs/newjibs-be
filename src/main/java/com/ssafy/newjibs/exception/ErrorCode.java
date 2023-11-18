@@ -10,6 +10,15 @@ public enum ErrorCode {
 	MEMBER_NOT_FOUND(401, "유저정보를 찾을 수 없습니다."),
 	DUPLICATED_EMAIL(409, "이미 가입되어있는 유저입니다."),
 
+	// toekn error code
+	TOKEN_FORBIDDEN(403, "token forbidden"),
+
+	// image error code
+	IMAGE_DELETE_ERROR(401, "삭제할 이미지를 찾을 수 없습니다."),
+	IMAGE_TYPE_ERROR(400, "이미지 파일이 아닙니다."),
+	IMAGE_NULL_ERROR(400, "이미지를 추가하지 않았습니다."),
+	SIZE_ERROR(400, "파일의 용량이 너무 큽니다."),
+
 	// house error code
 
 	// news error code

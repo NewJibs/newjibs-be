@@ -33,8 +33,5 @@ public class RegisterDto {
 	@Pattern(regexp = "^(19|20)\\d\\d-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$", message = "Invalid date of birth format")
 	private String birth;
 
-	@JsonProperty("member_image")
-	private String memberImage;
-
 	private Set<AuthorityDto> authorityDtoSet;
 }

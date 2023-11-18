@@ -66,12 +66,9 @@ public class HouseInfo {
 	@Column(name = "eubmyundongCode")
 	private String eubmyundongCode;
 
-	// @ManyToOne
-	// @JoinColumn(name = "dongCode")
-	// private DongCode dongCode;
-
+	@ManyToOne
 	@JoinColumn(name = "dongCode")
-	private String dongCode;
+	private DongCode dongCode;
 
 	@Column(name = "landCode")
 	private String landCode;
@@ -88,6 +85,6 @@ public class HouseInfo {
 	@Column(name = "lat")
 	private String lat;
 
-	// @OneToMany(mappedBy = "houseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
-	// private List<HouseDeal> houseDeals;
+	@OneToMany(mappedBy = "houseInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<HouseDeal> houseDeals;
 }
