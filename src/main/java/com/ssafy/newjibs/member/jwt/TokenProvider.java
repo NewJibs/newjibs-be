@@ -6,9 +6,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +17,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
+
+import com.ssafy.newjibs.member.domain.Authority;
+import com.ssafy.newjibs.member.domain.Member;
+import com.ssafy.newjibs.member.jwt.dto.Tokens;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -27,61 +32,79 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Component
-public class TokenProvider implements InitializingBean {
+public class TokenProvider {
 	private final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
 	private static final String AUTHORITIES_KEY = "auth";
-	private final String secret;
-	private final long tokenValidityInMilliSeconds;
 
-	private final long refreshTokenValidityInMilliSeconds;
+	@Value("${jwt.access-token-validity-in-seconds}")
+	private long accessTokenExpireTime;
+
+	@Value("${jwt.refresh-token-validity-in-seconds}")
+	private long refreshTokenExpireTime;
+
+	@Value("${jwt.secret}")
+	private String secret;
+
 	private Key key;
 
-	public TokenProvider(
-		@Value("${jwt.secret}") String secret,
-		@Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds,
-		@Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInSeconds) {
-		this.secret = secret;
-		this.tokenValidityInMilliSeconds = tokenValidityInSeconds * 1000;
-		this.refreshTokenValidityInMilliSeconds = refreshTokenValidityInSeconds * 1000;
-	}
-
-	@Override
-	public void afterPropertiesSet() {
+	@PostConstruct
+	public void init() {
 		byte[] keyBytes = Decoders.BASE64.decode(secret);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	public String createToken(Authentication authentication) {
-		String authorities = authentication.getAuthorities().stream()
-			.map(GrantedAuthority::getAuthority)
+	public String createToken(Member member) {
+		Claims claims = Jwts.claims().setSubject(member.getEmail()); // subject
+		Date now = new Date();
+
+		// authorities to string
+		String authorities = member.getAuthorities().stream()
+			.map(Authority::getAuthorityName) // get name from authority
 			.collect(Collectors.joining(","));
 
-		long now = (new Date()).getTime();
-		Date validity = new Date(now + this.tokenValidityInMilliSeconds);
-
+		// create token
 		return Jwts.builder()
-			.setSubject(authentication.getName())
+			.setClaims(claims) // save info
+			.claim(AUTHORITIES_KEY, authorities) // add authority
+			.setIssuedAt(now) // token issue time
+			.setExpiration(new Date(now.getTime() + accessTokenExpireTime * 1000)) // token expire time
+			.signWith(key, SignatureAlgorithm.HS256) // signature
+			.compact();
+	}
+
+	// create both of tokens(access, refresh)
+	public Tokens createTokens(Member member) {
+		long now = System.currentTimeMillis();
+		Date accessTokenValidity = new Date(now + this.accessTokenExpireTime * 1000);
+
+		// authorities to string
+		String authorities = member.getAuthorities().stream()
+			.map(Authority::getAuthorityName)
+			.collect(Collectors.joining(","));
+
+		// create access-token with authority
+		String accessToken = Jwts.builder()
+			.setSubject(member.getEmail())
 			.claim(AUTHORITIES_KEY, authorities)
-			.signWith(SignatureAlgorithm.HS512, key)
-			.setExpiration(validity)
+			.signWith(key, SignatureAlgorithm.HS256)
+			.setExpiration(accessTokenValidity)
 			.compact();
-	}
 
-	public String createRefreshToken(String subject) {
-		long now = (new Date()).getTime();
-		Date validity = new Date(now + this.refreshTokenValidityInMilliSeconds); // 리프레시 토큰의 유효기간 설정
-
-		return Jwts.builder()
-			.setSubject(subject)
-			.signWith(SignatureAlgorithm.HS512, key)
-			.setExpiration(validity)
+		// create refresh-token without authority)
+		Date refreshTokenValidity = new Date(now + this.refreshTokenExpireTime * 1000);
+		String refreshToken = Jwts.builder()
+			.setSubject(member.getEmail())
+			.signWith(key, SignatureAlgorithm.HS256)
+			.setExpiration(refreshTokenValidity)
 			.compact();
-	}
 
+		return new Tokens(accessToken, refreshToken);
+	}
 
 	public Authentication getAuthentication(String token) {
-		Claims claims = Jwts.parser()
+		Claims claims = Jwts.parserBuilder()
 			.setSigningKey(key)
+			.build()
 			.parseClaimsJws(token)
 			.getBody();
 
@@ -95,11 +118,21 @@ public class TokenProvider implements InitializingBean {
 		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 	}
 
+	public String getEmail(String token) {
+		// find email from token
+		return Jwts.parserBuilder()
+			.setSigningKey(key)
+			.build()
+			.parseClaimsJws(token)
+			.getBody()
+			.getSubject(); // username
+	}
+
 	public boolean validateToken(String token) {
 		try {
-			Jwts.parser().setSigningKey(key).parseClaimsJws(token);
+			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 			return true;
-		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+		} catch (SecurityException | MalformedJwtException e) {
 			logger.info("잘못된 JWT 서명입니다.");
 		} catch (ExpiredJwtException e) {
 			logger.info("만료된 JWT 토큰입니다.");
