@@ -33,9 +33,12 @@ dependencies {
 	// json
 	implementation 'org.json:json:20230227'
 	// jwt
+	implementation 'com.auth0:java-jwt:3.19.2'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	// swagger
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
