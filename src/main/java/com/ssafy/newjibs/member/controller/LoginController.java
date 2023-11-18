@@ -2,7 +2,6 @@ package com.ssafy.newjibs.member.controller;
 
 import javax.validation.Valid;
 
-import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,7 @@ import com.ssafy.newjibs.member.jwt.JwtFilter;
 import com.ssafy.newjibs.member.jwt.TokenProvider;
 import com.ssafy.newjibs.member.jwt.dto.TokenDto;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -38,11 +38,12 @@ public class LoginController {
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
-		String jwt = tokenProvider.createToken(authentication);
+		String accessToken = tokenProvider.createToken(authentication);
+		String refreshToken = tokenProvider.createRefreshToken(authentication.getName());
 
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+		httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + accessToken);
 
-		return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+		return new ResponseEntity<>(new TokenDto(accessToken, refreshToken), httpHeaders, HttpStatus.OK);
 	}
 }
