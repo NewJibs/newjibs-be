@@ -29,7 +29,7 @@ public class WebCrawler {
 	private final NewsService newsService;
 	private final NewsRepository newsRepository;
 	private final NewsParser newsParser;
-	private final LocalDate now = LocalDateTime.now().plusHours(0).toLocalDate();
+	private final LocalDate now = LocalDateTime.now().plusHours(9).toLocalDate();
 
 	public void crawlBeforeNews() throws IOException {
 		LocalDate endDate = now.minusDays(1);

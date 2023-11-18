@@ -1,0 +1,47 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - deploy
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: newjibs/newjibs
+          stage: main
+          yaml: >
+            name: newjibs-be
+
+            app: java@8
+
+            options:
+              ports: "8080"
+              env:
+                - name: DB_NAME
+                  value: ${{ secrets.DB_NAME }} 
+                - name: DB_PORT
+                  value: ${{ secrets.DB_PORT }} 
+                - name: DB_URL
+                  value: ${{ secrets.DB_URL }}
+                - name: MARIADB_PASSWORD
+                  value: ${{ secrets.MARIADB_PASSWORD }}
+                - name: MARIADB_USERNAME
+                  value: ${{ secrets.MARIADB_USERNAME }}
+                - name: OPEN_API_SERVICE_KEY
+                  value: ${{ secrets.OPEN_API_SERVICE_KEY }}
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: java-springboot
