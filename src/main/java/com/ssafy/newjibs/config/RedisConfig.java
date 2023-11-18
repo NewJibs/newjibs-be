@@ -10,16 +10,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 
-import com.ssafy.newjibs.member.repository.MemberRepository;
 import com.ssafy.newjibs.member.repository.TokenRedisRepository;
 
 @Configuration
-@EnableJpaRepositories(
-	includeFilters = @ComponentScan.Filter(
-		type = FilterType.ASSIGNABLE_TYPE,
-		classes = {MemberRepository.class}
-	)
-)
+@EnableJpaRepositories(basePackages = "com.ssafy.newjibs")
 @EnableRedisRepositories(
 	includeFilters = @ComponentScan.Filter(
 		type = FilterType.ASSIGNABLE_TYPE,
