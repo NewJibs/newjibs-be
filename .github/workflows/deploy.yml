@@ -26,7 +26,6 @@ jobs:
             app: java@8
 
             options:
-              ports: "8080"
               env:
                 - name: DB_NAME
                   value: ${{ secrets.DB_NAME }} 
@@ -40,6 +39,14 @@ jobs:
                   value: ${{ secrets.MARIADB_USERNAME }}
                 - name: OPEN_API_SERVICE_KEY
                   value: ${{ secrets.OPEN_API_SERVICE_KEY }}
+                - name: JWT_SECRET
+                  value: ${{ secrets.JWT_SECRET }}
+                - name: S3_BUCKET
+                  value: ${{ secrets.S3_BUCKET }}
+                - name: S3_ACCESS_KEY
+                  value: ${{ secrets.S3_ACCESS_KEY }}
+                - name: S3_SECRET_KEY
+                  value: ${{ secrets.S3_SECRET_KEY }}
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
