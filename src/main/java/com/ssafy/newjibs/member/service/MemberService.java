@@ -60,25 +60,23 @@ public class MemberService {
 		);
 	}
 
-	private void saveImageUrl(Long memberId, String url) {
+	public void saveImageUrl(Long memberId, String url) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
 		if (member.getImageUrl() != null) {// if image already uploaded, delete image from s3
 			s3Service.deleteImageFromS3(member.getImageUrl());
 		}
 		member.setImageUrl(url);
-		memberRepository.save(member);// todo: dirty checking possibility
 	}
 
-	private Optional<String> deleteImageUrl(Long memberId) {
+	public void deleteImageUrl(Long memberId) {
 		Member member = memberRepository.findById(memberId)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
 		String url = member.getImageUrl();
 		if (url == null) {
 			throw new BaseException(ErrorCode.IMAGE_DELETE_ERROR);
 		}
+		s3Service.deleteImageFromS3(url);
 		member.setImageUrl(null);
-		memberRepository.save(member);// todo: dirty checking possibility
-		return Optional.of(url);
 	}
 }
