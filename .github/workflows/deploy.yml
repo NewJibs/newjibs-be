@@ -26,6 +26,7 @@ jobs:
             app: java@8
 
             options:
+              ports: "8080"
               env:
                 - name: DB_NAME
                   value: ${{ secrets.DB_NAME }} 
