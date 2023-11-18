@@ -31,13 +31,6 @@ public class MemberController {
 		return ResponseEntity.ok(memberService.register(registerDto));
 	}
 
-	@ApiOperation(value = "로그아웃")
-	@PostMapping("/logout")
-	public ResponseEntity<Void> logout() {
-
-		return null;
-	}
-
 	@ApiOperation(value = "본인의 회원 정보를 가져온다.")
 	@GetMapping("/member")
 	@PreAuthorize("hasAnyRole('USER','ADMIN')")

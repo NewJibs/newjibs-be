@@ -22,7 +22,7 @@ public class MemberMapper {
 			.name(registerDto.getName())
 			.birth(LocalDate.parse(registerDto.getBirth()))
 			.joinDate(LocalDateTime.now())
-			.memberImage(registerDto.getMemberImage())
+			.imageUrl(registerDto.getMemberImage())
 			.authorities(Collections.singleton(authority))
 			.activated(true)
 			.build();
@@ -34,7 +34,7 @@ public class MemberMapper {
 			.name(member.getName())
 			.birth(member.getBirth())
 			.joinDate(member.getJoinDate())
-			.memberImage(member.getMemberImage())
+			.imageUrl(member.getImageUrl())
 			.authorityDtoSet(member.getAuthorities().stream()
 				.map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
 				.collect(Collectors.toSet()))
