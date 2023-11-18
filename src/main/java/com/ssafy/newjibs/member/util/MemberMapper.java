@@ -22,7 +22,6 @@ public class MemberMapper {
 			.name(registerDto.getName())
 			.birth(LocalDate.parse(registerDto.getBirth()))
 			.joinDate(LocalDateTime.now())
-			.imageUrl(registerDto.getMemberImage())
 			.authorities(Collections.singleton(authority))
 			.activated(true)
 			.build();
