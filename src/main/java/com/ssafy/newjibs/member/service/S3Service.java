@@ -38,6 +38,9 @@ public class S3Service {
 	private final MemberRepository memberRepository;
 
 	public String uploadImage(MultipartFile multipartFile) throws IOException {
+		if(multipartFile.isEmpty()) {
+			throw new BaseException(ErrorCode.IMAGE_NULL_ERROR);
+		}
 		verifyFileType(multipartFile.getContentType());
 		log.info(multipartFile.getOriginalFilename());
 		String fileName = createFileName(multipartFile.getOriginalFilename());
@@ -56,7 +59,6 @@ public class S3Service {
 		}
 
 		return amazonS3Client.getUrl(S3Bucket, fileName).toString();
-
 	}
 
 	public void deleteImageFromS3(String url) {
