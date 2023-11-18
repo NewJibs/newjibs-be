@@ -10,8 +10,6 @@ import com.ssafy.newjibs.member.domain.Member;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
-	Optional<Member> findByMemberId(Long memberId);
-
 	Optional<Member> findByEmail(String email);
 
 	Boolean existsByEmail(String email);

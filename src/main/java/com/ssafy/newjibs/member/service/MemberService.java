@@ -41,9 +41,11 @@ public class MemberService {
 		Member member = memberMapper.toEntity(registerDto, passwordEncoder.encode(registerDto.getPassword()),
 			authority);
 
-
-
 		return memberMapper.toDto(memberRepository.save(member));
+	}
+
+	public Member getMemberByEmail(String email) {
+		return memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
 	}
 
 	public MemberDto getMemberWithAuthorities(String email) {
