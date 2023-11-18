@@ -11,6 +11,7 @@ spring:
     url: jdbc:mysql://localhost:3306/newjibs?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: takealook
     password: '0205'
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -18,7 +19,7 @@ spring:
   jpa:
     #open-in-view: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 #    show-sql: true
@@ -28,9 +29,15 @@ spring:
         show-sql: true
     defer-datasource-initialization: true
 
+  redis:
+#    host: -- server address --
+    host: localhost
+    port: 6379
+
   sql:
     init:
-      mode: always
+      mode: never
+  #      mode: always
 
   profiles:
     active: jwt, api
