@@ -2,33 +2,40 @@ package com.ssafy.newjibs.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
-
-import com.ssafy.newjibs.member.repository.TokenRedisRepository;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
-@EnableJpaRepositories(basePackages = "com.ssafy.newjibs")
-@EnableRedisRepositories(
-	includeFilters = @ComponentScan.Filter(
-		type = FilterType.ASSIGNABLE_TYPE,
-		classes = {TokenRedisRepository.class}
-	)
-)
 public class RedisConfig {
 
 	@Value("${spring.redis.host}")
 	private String host;
 	@Value("${spring.redis.port}")
 	private int port;
+	// @Value("${spring.redis.password}")
+	// private String password;
 
 	@Bean
 	public RedisConnectionFactory redisConnectionFactory() {
-		return new LettuceConnectionFactory(host, port);
+		RedisStandaloneConfiguration redisStandaloneConfiguration = new RedisStandaloneConfiguration();
+		redisStandaloneConfiguration.setHostName(host);
+		redisStandaloneConfiguration.setPort(port);
+		// set password if exist
+	    // redisStandaloneConfiguration.setPassword(password);
+		return new LettuceConnectionFactory(redisStandaloneConfiguration);
+	}
+
+	@Bean
+	public RedisTemplate<String, Object> redisTemplate() {
+		RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+		redisTemplate.setConnectionFactory(redisConnectionFactory());
+		redisTemplate.setKeySerializer(new StringRedisSerializer());
+		redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
+		return redisTemplate;
 	}
 }
