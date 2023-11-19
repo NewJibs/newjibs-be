@@ -31,8 +31,8 @@ spring:
 
   redis:
 #    host: -- server address --
-    host: localhost
-    port: 6379
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
 
   sql:
     init:
