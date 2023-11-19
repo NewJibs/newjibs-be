@@ -48,6 +48,10 @@ jobs:
                   value: ${{ secrets.S3_ACCESS_KEY }}
                 - name: S3_SECRET_KEY
                   value: ${{ secrets.S3_SECRET_KEY }}
+                - name: REDIS_HOST
+                  value: ${{ secrets.REDIS_HOST }}
+                - name: REDIS_PORT
+                  value: ${{ secrets.REDIS_PORT }}
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
