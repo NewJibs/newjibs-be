@@ -79,4 +79,9 @@ public class MemberService {
 		s3Service.deleteImageFromS3(url);
 		member.setImageUrl(null);
 	}
+
+	public void withdraw() {
+		String email = SecurityUtil.getCurrentEmail().orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+		memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND)).setActivated(false);
+	}
 }

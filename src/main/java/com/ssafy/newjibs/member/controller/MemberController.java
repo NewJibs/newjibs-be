@@ -69,4 +69,12 @@ public class MemberController {
 	public ResponseEntity<MemberDto> getUserInfo(@PathVariable String email) {
 		return ResponseEntity.ok(memberService.getMemberWithAuthorities(email));
 	}
+
+	@ApiOperation(value = "회원 탈퇴")
+	@DeleteMapping("/member/withdrawal")
+	@PreAuthorize("hasAnyRole('USER')")
+	public ResponseEntity<Void> withdraw() {
+		memberService.withdraw();
+		return ResponseEntity.ok().build();
+	}
 }
