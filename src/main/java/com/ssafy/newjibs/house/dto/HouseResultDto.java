@@ -43,7 +43,7 @@ public class HouseResultDto {
 	private Integer afterDealDay;
 
 	@JsonProperty("resultGap")
-	private Long resultGap;// beforeDealAmount - afterDealAmount
+	private Long resultGap;// afterDealAmount - beforeDealAmount
 
 	@JsonProperty("area")
 	private String area;
