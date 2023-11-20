@@ -27,7 +27,7 @@ public class HouseDeal {
 	private Long no;
 
 	@Column(name = "dealAmount")
-	private String dealAmount;
+	private Long dealAmount;
 
 	@Column(name = "dealYear")
 	private Integer dealYear;
@@ -40,12 +40,6 @@ public class HouseDeal {
 
 	@Column(name = "area")
 	private String area;
-
-	@Column(name = "floor")
-	private String floor;
-
-	@Column(name = "cancelDealType")
-	private String cancelDealType;
 
 	@ManyToOne
 	@JoinColumn(name = "aptCode")
