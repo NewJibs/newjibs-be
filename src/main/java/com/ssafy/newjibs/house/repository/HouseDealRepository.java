@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ssafy.newjibs.house.domain.HouseDeal;
 import com.ssafy.newjibs.house.dto.Coordinate;
-import com.ssafy.newjibs.house.dto.DealNoDto;
 import com.ssafy.newjibs.house.dto.HouseDto;
+import com.ssafy.newjibs.house.dto.HouseResultDto;
 
 @Repository
 public interface HouseDealRepository extends JpaRepository<HouseDeal, Long> {
@@ -24,7 +24,7 @@ public interface HouseDealRepository extends JpaRepository<HouseDeal, Long> {
 	List<Coordinate> find2020CoordinatesWithMinMaxDealAmount();
 
 	@Query("SELECT new com.ssafy.newjibs.house.dto.HouseDto(" +
-		"hinfo.aptCode, hdeal.no, hdeal.dealYear, hdeal.dealMonth, hdeal.dealDay, hdeal.area, " +
+		"hinfo.aptCode, hdeal.no, hdeal.dealAmount, hdeal.dealYear, hdeal.dealMonth, hdeal.dealDay, hdeal.area, " +
 		"dcode.sidoName, dcode.gugunName, dcode.dongName, " +
 		"hinfo.buildYear, hinfo.roadName, hinfo.roadNameBonBun, hinfo.roadNameBubun, " +
 		"hinfo.roadNameSeq, hinfo.roadNameBasementCode, hinfo.roadNameCode, hinfo.dong, " +
@@ -36,9 +36,26 @@ public interface HouseDealRepository extends JpaRepository<HouseDeal, Long> {
 		"WHERE hinfo.aptCode = :aptCode")
 	List<HouseDto> findHouseDtosByAptCode(@Param("aptCode") Long aptCode);
 
-	@Query("SELECT new com.ssafy.newjibs.house.dto.DealNoDto(hd2020.no, hd2022.no) " +
+
+	@Query("SELECT new com.ssafy.newjibs.house.dto.HouseResultDto(" +
+		"hinfo2020.aptCode, hd2020.no, hd2020.dealAmount, hd2020.dealYear, hd2020.dealMonth, hd2020.dealDay, " +
+		"hd2022.dealAmount, hd2022.dealYear, hd2022.dealMonth, hd2022.dealDay, hd2022.dealAmount," +
+		"hd2022.area, dcode2022.sidoName, dcode2022.gugunName, dcode2022.dongName, " +
+		"hinfo2022.buildYear, hinfo2022.roadName, hinfo2022.roadNameBonBun, hinfo2022.roadNameBubun, " +
+		"hinfo2022.roadNameSeq, hinfo2022.roadNameBasementCode, hinfo2022.roadNameCode, hinfo2022.dong, " +
+		"hinfo2022.bonbun, hinfo2022.bubun, hinfo2022.sigunguCode, hinfo2022.eubmyundongCode, " +
+		"hinfo2022.landCode, hinfo2022.apartmentName, hinfo2022.jibun, hinfo2022.lng, hinfo2022.lat) " +
 		"FROM HouseDeal hd2020 " +
-		"JOIN HouseDeal hd2022 ON hd2020.houseInfo.aptCode = hd2022.houseInfo.aptCode AND hd2020.area = hd2022.area " +
-		"WHERE hd2020.dealYear = 2020 AND hd2022.dealYear = 2022")
-	List<DealNoDto> findDealNosForYears();
+		"JOIN hd2020.houseInfo hinfo2020 " +
+		"JOIN hinfo2020.dongCode dcode2020, " +
+		"HouseDeal hd2022 " +
+		"JOIN hd2022.houseInfo hinfo2022 " +
+		"JOIN hinfo2022.dongCode dcode2022 " +
+		"WHERE hd2020.no = :no " +
+		"AND hd2020.houseInfo.aptCode = hd2022.houseInfo.aptCode " +
+		"AND hd2020.area = hd2022.area " +
+		"AND hd2022.dealYear = 2022")
+	HouseResultDto findHouseResultDtoForGiven2020DealNo(@Param("no") Long no);
+
+
 }

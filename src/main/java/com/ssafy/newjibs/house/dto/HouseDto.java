@@ -18,6 +18,9 @@ public class HouseDto {
 	@JsonProperty("no")
 	private Long no;
 
+	@JsonProperty("dealAmount")
+	private Long dealAmount;
+
 	@JsonProperty("dealYear")
 	private Integer dealYear;
 
