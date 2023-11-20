@@ -7,3 +7,7 @@ insert into authority (authority_name) values ('ROLE_ADMIN');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_USER');
 insert into member_authority (member_id, authority_name) values (1, 'ROLE_ADMIN');
 # insert into member_authority (member_id, authority_name) values (2, 'ROLE_USER');
+
+drop table if exists housedeal;
+drop table if exists houseinfo;
+drop table if exists dongcode;
