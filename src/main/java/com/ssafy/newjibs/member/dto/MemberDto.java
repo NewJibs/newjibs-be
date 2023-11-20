@@ -36,5 +36,8 @@ public class MemberDto {
 	@JsonProperty("image_url")
 	private String imageUrl;
 
+	@JsonProperty("point")
+	private Long point;
+
 	private Set<AuthorityDto> authorityDtoSet;
 }

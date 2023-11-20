@@ -58,6 +58,9 @@ public class Member {
 	@Column(name = "image_url")
 	private String imageUrl;
 
+	@Column(name = "point")
+	private Long point;
+
 	@Column(name = "activated", nullable = false)
 	@NotNull
 	private Boolean activated;
