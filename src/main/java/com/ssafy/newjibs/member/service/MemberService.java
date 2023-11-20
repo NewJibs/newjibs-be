@@ -2,7 +2,9 @@ package com.ssafy.newjibs.member.service;
 
 import static com.ssafy.newjibs.member.options.AuthorityConstant.*;
 
-import java.util.Optional;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import com.ssafy.newjibs.exception.ErrorCode;
 import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
 import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.repository.MemberRepository;
 import com.ssafy.newjibs.member.util.MemberMapper;
@@ -82,6 +85,18 @@ public class MemberService {
 
 	public void withdraw() {
 		String email = SecurityUtil.getCurrentEmail().orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
-		memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND)).setActivated(false);
+		memberRepository.findByEmail(email)
+			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND))
+			.setActivated(false);
+	}
+
+	public Map<Long, RankDto> getRanks() {
+		List<Member> topTenMembers = memberRepository.findTop10MembersByPoint();
+		Map<Long, RankDto> ranks = new LinkedHashMap<>();
+		long rank = 1;
+		for (Member member : topTenMembers) {
+			ranks.put(rank++, memberMapper.toRankDto(member));
+		}
+		return ranks;
 	}
 }
