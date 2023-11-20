@@ -1,6 +1,7 @@
 package com.ssafy.newjibs.member.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.service.MemberService;
 import com.ssafy.newjibs.member.service.S3Service;
@@ -68,5 +70,19 @@ public class MemberController {
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<MemberDto> getUserInfo(@PathVariable String email) {
 		return ResponseEntity.ok(memberService.getMemberWithAuthorities(email));
+	}
+
+	@ApiOperation(value = "회원 탈퇴")
+	@DeleteMapping("/member/withdrawal")
+	@PreAuthorize("hasAnyRole('USER')")
+	public ResponseEntity<Void> withdraw() {
+		memberService.withdraw();
+		return ResponseEntity.ok().build();
+	}
+
+	@ApiOperation(value = "랭킹 조회")
+	@GetMapping("/ranks")
+	public ResponseEntity<Map<Long, RankDto>> getRanks() {
+		return ResponseEntity.ok(memberService.getRanks());
 	}
 }

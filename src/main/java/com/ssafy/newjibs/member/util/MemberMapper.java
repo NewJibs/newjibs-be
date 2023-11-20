@@ -11,6 +11,7 @@ import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
 import com.ssafy.newjibs.member.dto.AuthorityDto;
 import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 
 @Component
@@ -22,6 +23,8 @@ public class MemberMapper {
 			.name(registerDto.getName())
 			.birth(LocalDate.parse(registerDto.getBirth()))
 			.joinDate(LocalDateTime.now())
+			// skip image
+			.point(0L)// set init point to zero
 			.authorities(Collections.singleton(authority))
 			.activated(true)
 			.build();
@@ -34,9 +37,17 @@ public class MemberMapper {
 			.birth(member.getBirth())
 			.joinDate(member.getJoinDate())
 			.imageUrl(member.getImageUrl())
+			.point(member.getPoint())
 			.authorityDtoSet(member.getAuthorities().stream()
 				.map(authority -> AuthorityDto.builder().authorityName(authority.getAuthorityName()).build())
 				.collect(Collectors.toSet()))
+			.build();
+	}
+
+	public RankDto toRankDto(Member member) {
+		return RankDto.builder()
+			.email(member.getEmail())
+			.point(member.getPoint())
 			.build();
 	}
 }
