@@ -1,28 +1,32 @@
 package com.ssafy.newjibs.house.controller;
 
-import com.ssafy.newjibs.api.ApiExplorer;
-import com.ssafy.newjibs.api.house.HouseApi;
-import com.ssafy.newjibs.house.service.HouseService;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.IOException;
+import com.ssafy.newjibs.house.dto.Coordinate;
+import com.ssafy.newjibs.house.dto.HouseDto;
+import com.ssafy.newjibs.house.service.HouseService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/v1/houses")
 public class HouseController {
-    private final HouseService houseService;
-    private final HouseApi houseApi;
+	private final HouseService houseService;
 
-    @GetMapping("/api/test")
-    public ResponseEntity<Void> apiTest() throws IOException {
-        String data = ApiExplorer.getData(houseApi.getHouseDealUrl(11110, 	201512));
-        System.out.println(data);
+	@GetMapping("/coordinates")
+	public ResponseEntity<List<Coordinate>> getAllCoordinates() {
+		return ResponseEntity.ok(houseService.find2020CoordinatesWithMinMaxDealAmount());
+	}
 
-        return null;
-    }
+	@GetMapping("/{aptCode}")
+	public ResponseEntity<List<HouseDto>> getHouses(@PathVariable Long aptCode) {
+		return ResponseEntity.ok(houseService.findHouseDtosByAptCode(aptCode));
+	}
 }
