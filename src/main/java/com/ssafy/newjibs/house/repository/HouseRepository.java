@@ -13,7 +13,7 @@ import com.ssafy.newjibs.house.dto.HouseDto;
 import com.ssafy.newjibs.house.dto.HouseResultDto;
 
 @Repository
-public interface HouseDealRepository extends JpaRepository<HouseDeal, Long> {
+public interface HouseRepository extends JpaRepository<HouseDeal, Long> {
 	@Query("SELECT new com.ssafy.newjibs.house.dto.Coordinate(" +
 		"hinfo.aptCode, hinfo.lat, hinfo.lng, " +
 		"MIN(hdeal.dealAmount), MAX(hdeal.dealAmount)) " +
@@ -33,12 +33,11 @@ public interface HouseDealRepository extends JpaRepository<HouseDeal, Long> {
 		"FROM HouseDeal hdeal " +
 		"JOIN hdeal.houseInfo hinfo " +
 		"JOIN hinfo.dongCode dcode " +
-		"WHERE hinfo.aptCode = :aptCode")
-	List<HouseDto> findHouseDtosByAptCode(@Param("aptCode") Long aptCode);
-
+		"WHERE hinfo.aptCode = :aptCode AND hdeal.dealYear = 2020")
+	List<HouseDto> findHouseDtosByAptCodeFor2020(@Param("aptCode") Long aptCode);
 
 	@Query("SELECT new com.ssafy.newjibs.house.dto.HouseResultDto(" +
-		"hinfo2020.aptCode, hd2020.no, hd2020.dealAmount, hd2020.dealYear, hd2020.dealMonth, hd2020.dealDay, " +
+		"hinfo2020.aptCode, hd2022.no, hd2020.dealAmount, hd2020.dealYear, hd2020.dealMonth, hd2020.dealDay, " +
 		"hd2022.dealAmount, hd2022.dealYear, hd2022.dealMonth, hd2022.dealDay, hd2022.dealAmount," +
 		"hd2022.area, dcode2022.sidoName, dcode2022.gugunName, dcode2022.dongName, " +
 		"hinfo2022.buildYear, hinfo2022.roadName, hinfo2022.roadNameBonBun, hinfo2022.roadNameBubun, " +
@@ -56,6 +55,4 @@ public interface HouseDealRepository extends JpaRepository<HouseDeal, Long> {
 		"AND hd2020.area = hd2022.area " +
 		"AND hd2022.dealYear = 2022")
 	HouseResultDto findHouseResultDtoForGiven2020DealNo(@Param("no") Long no);
-
-
 }
