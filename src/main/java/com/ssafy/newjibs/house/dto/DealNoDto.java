@@ -1,6 +1,7 @@
 package com.ssafy.newjibs.house.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HouseRequestDto {
-    @JsonProperty("city")
-    private String city;
+public class DealNoDto {
+	@JsonProperty("2020")
+	private Long no2020;
 
-    @JsonProperty("dongcode")
-    private String dongcode;
-
-    @JsonProperty("dong")
-    private String dong;
+	@JsonProperty("2022")
+	private Long no2022;
 }
