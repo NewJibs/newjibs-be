@@ -11,39 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class HouseResultDto {
+public class HouseInfoDto {
 	@JsonProperty("aptCode")
 	private Long aptCode;
 
 	@JsonProperty("no")
 	private Long no;
-
-	@JsonProperty("beforeDealAmount")
-	private Long beforeDealAmount;
-
-	@JsonProperty("beforeDealYear")
-	private Integer beforeDealYear;
-
-	@JsonProperty("beforeDealMonth")
-	private Integer beforeDealMonth;
-
-	@JsonProperty("beforeDealDay")
-	private Integer beforeDealDay;
-
-	@JsonProperty("afterDealAmount")
-	private Long afterDealAmount;
-
-	@JsonProperty("afterDealYear")
-	private Integer afterDealYear;
-
-	@JsonProperty("afterDealMonth")
-	private Integer afterDealMonth;
-
-	@JsonProperty("afterDealDay")
-	private Integer afterDealDay;
-
-	@JsonProperty("resultGap")
-	private Long resultGap;// afterDealAmount - beforeDealAmount
 
 	@JsonProperty("area")
 	private String area;
