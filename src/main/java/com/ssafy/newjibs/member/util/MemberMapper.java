@@ -59,6 +59,7 @@ public class MemberMapper {
 	public RankDto toRankDto(Member member) {
 		return RankDto.builder()
 			.email(member.getEmail())
+			.name(member.getName())
 			.point(member.getPoint())
 			.build();
 	}

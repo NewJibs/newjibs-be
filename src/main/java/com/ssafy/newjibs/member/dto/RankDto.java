@@ -15,6 +15,9 @@ public class RankDto {
 	@JsonProperty("email")
 	private String email;
 
+	@JsonProperty("name")
+	private String name;
+
 	@JsonProperty("point")
 	private Long point;
 }
