@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component;
 import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
 import com.ssafy.newjibs.member.dto.AuthorityDto;
-import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
+import com.ssafy.newjibs.member.dto.MemberInfoDto;
 import com.ssafy.newjibs.member.dto.MemberSelfInfoDto;
+import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 
@@ -45,12 +46,21 @@ public class MemberMapper {
 			.build();
 	}
 
-	public MemberSelfInfoDto toInfoDto(Member member) {
+	public MemberSelfInfoDto toSelfInfoDto(Member member) {
 		return MemberSelfInfoDto.builder()
 			.email(member.getEmail())
 			.name(member.getName())
 			.birth(member.getBirth())
 			.joinDate(member.getJoinDate())
+			.imageUrl(member.getImageUrl())
+			.point(member.getPoint())
+			.build();
+	}
+
+	public MemberInfoDto toInfoDto(Member member) {
+		return MemberInfoDto.builder()
+			.email(member.getEmail())
+			.name(member.getName())
 			.imageUrl(member.getImageUrl())
 			.point(member.getPoint())
 			.build();
