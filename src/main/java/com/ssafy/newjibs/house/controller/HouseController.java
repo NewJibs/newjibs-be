@@ -1,7 +1,6 @@
 package com.ssafy.newjibs.house.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.newjibs.house.dto.Coordinate;
+import com.ssafy.newjibs.house.dto.FinalResultDto;
 import com.ssafy.newjibs.house.dto.HouseDto;
-import com.ssafy.newjibs.house.dto.HouseResultDto;
 import com.ssafy.newjibs.house.service.HouseService;
 
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +38,7 @@ public class HouseController {
 
 	@ApiOperation(value = "구매한 부동산 목록에 대한 투자 결과")
 	@PostMapping("/results")
-	public ResponseEntity<Map<Long, HouseResultDto>> getResults(@RequestBody List<Long> nos) {
-		return ResponseEntity.ok(houseService.findHouseResultDtoForGiven2020DealNo(nos));
+	public ResponseEntity<FinalResultDto> getResults(@RequestBody List<Long> nos) {
+		return ResponseEntity.ok(houseService.findResultsByDealNo(nos));
 	}
 }
