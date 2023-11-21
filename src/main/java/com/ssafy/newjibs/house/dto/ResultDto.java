@@ -1,4 +1,4 @@
-package com.ssafy.newjibs.member.dto;
+package com.ssafy.newjibs.house.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,13 +11,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RankDto {
-	@JsonProperty("email")
-	private String email;
+public class ResultDto {
+	@JsonProperty("priceChange")
+	private PriceChangeDto priceChangeDto;
 
-	@JsonProperty("name")
-	private String name;
-
-	@JsonProperty("point")
-	private Long point;
+	@JsonProperty("houseInfo")
+	private HouseInfoDto houseInfoDto;
 }

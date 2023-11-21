@@ -11,12 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RankDto {
+public class MemberInfoDto {
 	@JsonProperty("email")
 	private String email;
 
 	@JsonProperty("name")
 	private String name;
+
+	@JsonProperty("image_url")
+	private String imageUrl;
 
 	@JsonProperty("point")
 	private Long point;

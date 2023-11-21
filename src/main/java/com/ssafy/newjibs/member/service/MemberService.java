@@ -14,7 +14,9 @@ import com.ssafy.newjibs.exception.BaseException;
 import com.ssafy.newjibs.exception.ErrorCode;
 import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
-import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.MemberInfoDto;
+import com.ssafy.newjibs.member.dto.MemberSelfInfoDto;
+import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.repository.MemberRepository;
@@ -32,7 +34,7 @@ public class MemberService {
 	private final MemberMapper memberMapper;
 	private final S3Service s3Service;
 
-	public MemberDto register(RegisterDto registerDto) {
+	public MemberWithAuthDto register(RegisterDto registerDto) {
 		if (memberRepository.existsByEmail(registerDto.getEmail())) {
 			throw new BaseException(ErrorCode.DUPLICATED_EMAIL);
 		}
@@ -51,16 +53,29 @@ public class MemberService {
 		return memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
 	}
 
-	public MemberDto getMemberWithAuthorities(String email) {
+	public MemberWithAuthDto getMemberWithAuthorities(String email) {
 		return memberMapper.toDto(
 			memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND)));
 	}
 
-	public MemberDto getMyMemberWithAuthorities() {
-		return memberMapper.toDto(SecurityUtil.getCurrentEmail()
-			.flatMap(memberRepository::findOneWithAuthoritiesByEmail)
+	public MemberSelfInfoDto getMyMemberInfo() {
+		return memberMapper.toSelfInfoDto(SecurityUtil.getCurrentEmail()
+			.flatMap(memberRepository::findByEmail)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND))
 		);
+	}
+
+	public MemberInfoDto getMemberInfo(String email) {
+		Member member = memberRepository.findByEmail(email)
+			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+
+		if (member.getAuthorities().stream()
+			.anyMatch(auth -> ADMIN.getRole()
+				.equals(auth.getAuthorityName()))) {// forbidden if trying to see admin's info
+			throw new BaseException(ErrorCode.ADMIN_NOT_ALLOWED);
+		}
+
+		return memberMapper.toInfoDto(member);
 	}
 
 	public void saveImageUrl(Long memberId, String url) {

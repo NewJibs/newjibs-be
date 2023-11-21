@@ -9,7 +9,7 @@ public enum ErrorCode {
 	// member error code
 	MEMBER_NOT_FOUND(401, "유저정보를 찾을 수 없습니다."),
 	DUPLICATED_EMAIL(409, "이미 가입되어있는 유저입니다."),
-
+	ADMIN_NOT_ALLOWED(403, "관리자의 정보는 볼 수 없습니다."),
 	// toekn error code
 	TOKEN_FORBIDDEN(403, "token forbidden"),
 

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MemberDto {
+public class MemberWithAuthDto {
 	@JsonProperty("email")
 	@Email(message = "Invalid email format")
 	private String email;

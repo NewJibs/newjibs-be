@@ -3,7 +3,6 @@ package com.ssafy.newjibs.member.controller;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.MemberInfoDto;
+import com.ssafy.newjibs.member.dto.MemberSelfInfoDto;
+import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.service.MemberService;
@@ -36,7 +37,7 @@ public class MemberController {
 
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/register")
-	public ResponseEntity<MemberDto> register(@Valid @RequestBody RegisterDto registerDto) {
+	public ResponseEntity<MemberWithAuthDto> register(@Valid @RequestBody RegisterDto registerDto) {
 		return ResponseEntity.ok(memberService.register(registerDto));
 	}
 
@@ -58,17 +59,24 @@ public class MemberController {
 		return ResponseEntity.ok().build();
 	}
 
-	@ApiOperation(value = "본인의 회원 정보를 가져온다.")
+	@ApiOperation(value = "본인의 회원 정보 조회")
 	@GetMapping("/member")
 	@PreAuthorize("hasAnyRole('USER','ADMIN')")
-	public ResponseEntity<MemberDto> getMyUserInfo(HttpServletRequest request) {
-		return ResponseEntity.ok(memberService.getMyMemberWithAuthorities());
+	public ResponseEntity<MemberSelfInfoDto> getMyUserInfo() {
+		return ResponseEntity.ok(memberService.getMyMemberInfo());
 	}
 
-	@ApiOperation(value = "특정 유저 정보를 가져온다.")
+	@ApiOperation(value = "다른 유저의 회원 정보 조회")
+	@GetMapping("/{email}")
+	@PreAuthorize("hasAnyRole('USER','ADMIN')")
+	public ResponseEntity<MemberInfoDto> getUserInfo(@PathVariable String email) {
+		return ResponseEntity.ok(memberService.getMemberInfo(email));
+	}
+
+	@ApiOperation(value = "관리자가 특정 유저의 회원 정보를 조회")
 	@GetMapping("/member/{email}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<MemberDto> getUserInfo(@PathVariable String email) {
+	public ResponseEntity<MemberWithAuthDto> getUserInfoByAdmin(@PathVariable String email) {
 		return ResponseEntity.ok(memberService.getMemberWithAuthorities(email));
 	}
 
@@ -80,7 +88,7 @@ public class MemberController {
 		return ResponseEntity.ok().build();
 	}
 
-	@ApiOperation(value = "랭킹 조회")
+	@ApiOperation(value = "1 ~ 10위 랭킹 조회")
 	@GetMapping("/ranks")
 	public ResponseEntity<Map<Long, RankDto>> getRanks() {
 		return ResponseEntity.ok(memberService.getRanks());
