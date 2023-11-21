@@ -1,8 +1,7 @@
 package com.ssafy.newjibs.house.service;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ssafy.newjibs.exception.BaseException;
 import com.ssafy.newjibs.exception.ErrorCode;
 import com.ssafy.newjibs.house.dto.Coordinate;
+import com.ssafy.newjibs.house.dto.FinalResultDto;
 import com.ssafy.newjibs.house.dto.HouseDto;
-import com.ssafy.newjibs.house.dto.HouseResultDto;
+import com.ssafy.newjibs.house.dto.HouseInfoDto;
+import com.ssafy.newjibs.house.dto.PriceChangeDto;
+import com.ssafy.newjibs.house.dto.ResultDto;
 import com.ssafy.newjibs.house.repository.HouseRepository;
 import com.ssafy.newjibs.member.domain.Member;
 import com.ssafy.newjibs.member.repository.MemberRepository;
@@ -34,28 +36,30 @@ public class HouseService {
 		return houseRepository.findHouseDtosByAptCodeFor2020(aptCode);
 	}
 
-	public Map<Long, HouseResultDto> findHouseResultDtoForGiven2020DealNo(List<Long> nos) {
-		Map<Long, HouseResultDto> resultMap = new LinkedHashMap<>();
-		long point = 0L;
+	public FinalResultDto findResultsByDealNo(List<Long> nos) {
+		List<ResultDto> results = new ArrayList<>();
+		long sumGapPrice = 0L;
 		for (Long no : nos) {
-			HouseResultDto houseResultDto = houseRepository.findHouseResultDtoForGiven2020DealNo(no);
-			long gap = houseResultDto.getResultGap() - houseResultDto.getBeforeDealAmount();
-			point += gap;
-			houseResultDto.setResultGap(gap);
-			resultMap.put(no, houseResultDto);
+			PriceChangeDto priceChangeDto = houseRepository.findPriceChangeByNo(no);
+			HouseInfoDto houseInfoDto = houseRepository.findHouseInfo(no);
+			ResultDto resultDto = new ResultDto(priceChangeDto, houseInfoDto);
+			results.add(resultDto);
+
+			sumGapPrice += priceChangeDto.getPriceGap();
 		}
 
-		updatePoint(point);
+		updatePoint(sumGapPrice);
 
-		return resultMap;
+		return new FinalResultDto(sumGapPrice, results);
 	}
 
 	private void updatePoint(long point) {
 		String email = SecurityUtil.getCurrentEmail().orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
-		Member member = memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+		Member member = memberRepository.findByEmail(email)
+			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
 		long updatedPoint = member.getPoint() + point;
 
-		if(updatedPoint < 0) {// set point to zero when point is minus
+		if (updatedPoint < 0) {// set point to zero when point is minus
 			member.setPoint(0L);
 		}
 		member.setPoint(updatedPoint);
