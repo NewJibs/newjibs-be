@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
 import com.ssafy.newjibs.member.dto.MemberInfoDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
@@ -36,7 +36,7 @@ public class MemberController {
 
 	@ApiOperation(value = "회원가입")
 	@PostMapping("/register")
-	public ResponseEntity<MemberDto> register(@Valid @RequestBody RegisterDto registerDto) {
+	public ResponseEntity<MemberWithAuthDto> register(@Valid @RequestBody RegisterDto registerDto) {
 		return ResponseEntity.ok(memberService.register(registerDto));
 	}
 
@@ -68,7 +68,7 @@ public class MemberController {
 	@ApiOperation(value = "특정 유저 정보를 가져온다.")
 	@GetMapping("/member/{email}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<MemberDto> getUserInfo(@PathVariable String email) {
+	public ResponseEntity<MemberWithAuthDto> getUserInfo(@PathVariable String email) {
 		return ResponseEntity.ok(memberService.getMemberWithAuthorities(email));
 	}
 
