@@ -68,6 +68,13 @@ public class MemberService {
 	public MemberInfoDto getMemberInfo(String email) {
 		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+
+		if (member.getAuthorities().stream()
+			.anyMatch(auth -> ADMIN.getRole()
+				.equals(auth.getAuthorityName()))) {// forbidden if trying to see admin's info
+			throw new BaseException(ErrorCode.ADMIN_NOT_ALLOWED);
+		}
+
 		return memberMapper.toInfoDto(member);
 	}
 
