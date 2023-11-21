@@ -14,8 +14,9 @@ import com.ssafy.newjibs.exception.BaseException;
 import com.ssafy.newjibs.exception.ErrorCode;
 import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
-import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
+import com.ssafy.newjibs.member.dto.MemberInfoDto;
 import com.ssafy.newjibs.member.dto.MemberSelfInfoDto;
+import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.repository.MemberRepository;
@@ -58,10 +59,16 @@ public class MemberService {
 	}
 
 	public MemberSelfInfoDto getMyMemberInfo() {
-		return memberMapper.toInfoDto(SecurityUtil.getCurrentEmail()
+		return memberMapper.toSelfInfoDto(SecurityUtil.getCurrentEmail()
 			.flatMap(memberRepository::findByEmail)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND))
 		);
+	}
+
+	public MemberInfoDto getMemberInfo(String email) {
+		Member member = memberRepository.findByEmail(email)
+			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+		return memberMapper.toInfoDto(member);
 	}
 
 	public void saveImageUrl(Long memberId, String url) {
