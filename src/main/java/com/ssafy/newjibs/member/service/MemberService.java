@@ -15,6 +15,7 @@ import com.ssafy.newjibs.exception.ErrorCode;
 import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
 import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.MemberInfoDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.repository.MemberRepository;
@@ -56,9 +57,9 @@ public class MemberService {
 			memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND)));
 	}
 
-	public MemberDto getMyMemberWithAuthorities() {
-		return memberMapper.toDto(SecurityUtil.getCurrentEmail()
-			.flatMap(memberRepository::findOneWithAuthoritiesByEmail)
+	public MemberInfoDto getMyMemberInfo() {
+		return memberMapper.toInfoDto(SecurityUtil.getCurrentEmail()
+			.flatMap(memberRepository::findByEmail)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND))
 		);
 	}

@@ -3,7 +3,6 @@ package com.ssafy.newjibs.member.controller;
 import java.io.IOException;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.newjibs.member.dto.MemberDto;
+import com.ssafy.newjibs.member.dto.MemberInfoDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.service.MemberService;
@@ -61,8 +61,8 @@ public class MemberController {
 	@ApiOperation(value = "본인의 회원 정보를 가져온다.")
 	@GetMapping("/member")
 	@PreAuthorize("hasAnyRole('USER','ADMIN')")
-	public ResponseEntity<MemberDto> getMyUserInfo(HttpServletRequest request) {
-		return ResponseEntity.ok(memberService.getMyMemberWithAuthorities());
+	public ResponseEntity<MemberInfoDto> getMyUserInfo() {
+		return ResponseEntity.ok(memberService.getMyMemberInfo());
 	}
 
 	@ApiOperation(value = "특정 유저 정보를 가져온다.")
