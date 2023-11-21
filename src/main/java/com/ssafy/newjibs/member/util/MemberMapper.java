@@ -11,7 +11,7 @@ import com.ssafy.newjibs.member.domain.Authority;
 import com.ssafy.newjibs.member.domain.Member;
 import com.ssafy.newjibs.member.dto.AuthorityDto;
 import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
-import com.ssafy.newjibs.member.dto.MemberInfoDto;
+import com.ssafy.newjibs.member.dto.MemberSelfInfoDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 
@@ -45,8 +45,8 @@ public class MemberMapper {
 			.build();
 	}
 
-	public MemberInfoDto toInfoDto(Member member) {
-		return MemberInfoDto.builder()
+	public MemberSelfInfoDto toInfoDto(Member member) {
+		return MemberSelfInfoDto.builder()
 			.email(member.getEmail())
 			.name(member.getName())
 			.birth(member.getBirth())
