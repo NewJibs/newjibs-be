@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,6 +53,7 @@ public class NewsController {
 	}
 
 	@ApiOperation(value = "뉴스를 삭제한다.")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{articleId}")
 	public ResponseEntity<Void> removeNews(@PathVariable String articleId) {
 		newsService.deleteNews(articleId);
