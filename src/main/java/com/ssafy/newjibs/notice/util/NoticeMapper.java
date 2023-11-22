@@ -5,16 +5,16 @@ import org.springframework.stereotype.Component;
 import com.ssafy.newjibs.notice.domain.Notice;
 import com.ssafy.newjibs.notice.dto.NoticeDto;
 import com.ssafy.newjibs.notice.dto.NoticeListDto;
+import com.ssafy.newjibs.notice.dto.NoticePostDto;
 
 @Component
 public class NoticeMapper {
-	public Notice toEntity(NoticeDto noticeDto, String url) {
+	public Notice toEntity(NoticePostDto noticePostDto) {
 		return Notice.builder()
-			.title(noticeDto.getTitle())
-			.author(noticeDto.getAuthor())
-			.content(noticeDto.getContent())
-			.imageUrl(url)
-			.date(noticeDto.getDate())
+			.title(noticePostDto.getTitle())
+			.author("관리자")
+			.content(noticePostDto.getContent())
+			.date(noticePostDto.getDate())
 			.isDeleted(false)
 			.build();
 	}
@@ -24,7 +24,6 @@ public class NoticeMapper {
 			.title(notice.getTitle())
 			.author(notice.getAuthor())
 			.content(notice.getContent())
-			.imageUrl(notice.getImageUrl())
 			.date(notice.getDate())
 			.build();
 	}
