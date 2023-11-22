@@ -1,4 +1,4 @@
-package com.ssafy.newjibs.utility;
+package com.ssafy.newjibs.utility.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -19,7 +19,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.newjibs.exception.BaseException;
 import com.ssafy.newjibs.exception.ErrorCode;
-import com.ssafy.newjibs.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ public class S3Service {
 	private String S3Bucket; // bucket name
 
 	public String uploadImage(MultipartFile multipartFile, String uploadPath) throws IOException {
-		if(multipartFile.isEmpty()) {
+		if (multipartFile.isEmpty()) {
 			throw new BaseException(ErrorCode.IMAGE_NULL_ERROR);
 		}
 		verifyFileType(multipartFile.getContentType());
