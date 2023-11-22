@@ -1,7 +1,5 @@
 package com.ssafy.newjibs.member.controller;
 
-import static com.ssafy.newjibs.utility.constant.ImageUploadPath.*;
-
 import java.io.IOException;
 import java.util.Map;
 
@@ -25,7 +23,7 @@ import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.service.MemberService;
-import com.ssafy.newjibs.utility.service.S3Service;
+import com.ssafy.newjibs.member.service.S3Service;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +46,7 @@ public class MemberController {
 	@PreAuthorize("hasAnyRole('USER','ADMIN')")
 	public ResponseEntity<Void> uploadImage(@PathVariable Long memberId,
 		@RequestPart(value = "image", required = false) MultipartFile multipartFile) throws IOException {
-		String url = s3Service.uploadImage(multipartFile, PROFILE_PATH.getPath());
+		String url = s3Service.uploadImage(multipartFile);
 		memberService.saveImageUrl(memberId, url);
 		return ResponseEntity.ok().build();
 	}

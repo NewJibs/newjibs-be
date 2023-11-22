@@ -22,7 +22,6 @@ import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.repository.MemberRepository;
 import com.ssafy.newjibs.member.util.MemberMapper;
 import com.ssafy.newjibs.member.util.SecurityUtil;
-import com.ssafy.newjibs.utility.service.S3Service;
 
 import lombok.RequiredArgsConstructor;
 

@@ -1,4 +1,4 @@
-package com.ssafy.newjibs.utility.service;
+package com.ssafy.newjibs.member.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,13 +34,13 @@ public class S3Service {
 	@Value("${cloud.aws.s3.bucket}")
 	private String S3Bucket; // bucket name
 
-	public String uploadImage(MultipartFile multipartFile, String uploadPath) throws IOException {
+	public String uploadImage(MultipartFile multipartFile) throws IOException {
 		if (multipartFile.isEmpty()) {
 			throw new BaseException(ErrorCode.IMAGE_NULL_ERROR);
 		}
 		verifyFileType(multipartFile.getContentType());
 		log.info(multipartFile.getOriginalFilename());
-		String fileName = uploadPath + createFileName(multipartFile.getOriginalFilename());
+		String fileName = createFileName(multipartFile.getOriginalFilename());
 
 		ObjectMetadata objectMetaData = new ObjectMetadata();
 		objectMetaData.setContentType(multipartFile.getContentType());
