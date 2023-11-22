@@ -19,7 +19,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.newjibs.exception.BaseException;
 import com.ssafy.newjibs.exception.ErrorCode;
-import com.ssafy.newjibs.member.repository.MemberRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,10 +34,8 @@ public class S3Service {
 	@Value("${cloud.aws.s3.bucket}")
 	private String S3Bucket; // bucket name
 
-	private final MemberRepository memberRepository;
-
 	public String uploadImage(MultipartFile multipartFile) throws IOException {
-		if(multipartFile.isEmpty()) {
+		if (multipartFile.isEmpty()) {
 			throw new BaseException(ErrorCode.IMAGE_NULL_ERROR);
 		}
 		verifyFileType(multipartFile.getContentType());

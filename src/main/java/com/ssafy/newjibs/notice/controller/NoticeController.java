@@ -3,6 +3,7 @@ package com.ssafy.newjibs.notice.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.newjibs.notice.dto.NoticeDto;
 import com.ssafy.newjibs.notice.dto.NoticeListDto;
+import com.ssafy.newjibs.notice.dto.NoticePostDto;
 import com.ssafy.newjibs.notice.service.NoticeService;
 
 import io.swagger.annotations.ApiOperation;
@@ -26,9 +28,10 @@ public class NoticeController {
 	private final NoticeService noticeService;
 
 	@ApiOperation(value = "공지사항을 저장한다.")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
-	public ResponseEntity<Void> saveNotice(@RequestBody NoticeDto noticeDto) {
-		noticeService.createNotice(noticeDto);
+	public ResponseEntity<Void> saveNotice(@RequestBody NoticePostDto noticePostDto) {
+		noticeService.createNotice(noticePostDto);
 		return ResponseEntity.ok().build();
 	}
 
@@ -45,13 +48,15 @@ public class NoticeController {
 	}
 
 	@ApiOperation(value = "공지사항을 수정한다.")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{noticeId}")
-	public ResponseEntity<Void> modifyNotice(@PathVariable Long noticeId, @RequestBody NoticeDto noticeDto) {
-		noticeService.updateNotice(noticeId, noticeDto);
+	public ResponseEntity<Void> modifyNotice(@PathVariable Long noticeId, @RequestBody NoticePostDto noticePostDto) {
+		noticeService.updateNotice(noticeId, noticePostDto);
 		return ResponseEntity.ok().build();
 	}
 
 	@ApiOperation(value = "공지사항을 삭제한다.")
+	@PreAuthorize("hasAnyRole('ADMIN')")
 	@DeleteMapping("/{noticeId}")
 	public ResponseEntity<Void> removeNotice(@PathVariable Long noticeId) {
 		noticeService.deleteNotice(noticeId);

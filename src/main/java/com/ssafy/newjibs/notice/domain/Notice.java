@@ -1,13 +1,20 @@
 package com.ssafy.newjibs.notice.domain;
 
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @Builder
@@ -16,26 +23,23 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 @Table(name = "notice")
 public class Notice {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long noticeId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long noticeId;
 
-    @Column(nullable = false)
-    private String title;
+	@Column(nullable = false)
+	private String title;
 
-    @Column(nullable = false)
-    private String author;
+	@Column(nullable = false)
+	private String author;
 
-    @Column(nullable = false)
-    private String content;
+	@Column(nullable = false)
+	private String content;
 
-    @Column
-    private String imgUrl;
+	@Column(nullable = false, columnDefinition = "DATETIME(0)")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime date;
 
-    @Column(nullable = false, columnDefinition = "DATETIME(0)")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime date;
-
-    @Column(nullable = false)
-    private Boolean isDeleted;
+	@Column(nullable = false)
+	private Boolean isDeleted;
 }

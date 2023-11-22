@@ -24,44 +24,44 @@ public class News {
 	@Column(nullable = false)
 	private String articleId;// use article's generated id
 
-	@Column(nullable = false)
+	@Column(name = "press_corporation_name", nullable = false)
 	private String pressCorporationName;
 
 	@Column(nullable = false)
 	private String title;
 
 	@Lob
-	@Column(nullable = false)
+	@Column(name = "summary_content", nullable = false)
 	private String summaryContent;// summary on title
 
-	@Column(nullable = false)
+	@Column(name = "link_url", nullable = false)
 	private String linkUrl;
 
 	@Column(nullable = false)
 	private String thumbnail;
 
-	@Column(nullable = false, columnDefinition = "DATETIME") // set String to DATETIME on column
+	@Column(name = "publish_date_time", nullable = false, columnDefinition = "DATETIME") // set String to DATETIME on column
 	private String publishDateTime;
 
-	@Column(nullable = false)
+	@Column(name = "content_summary", nullable = false)
 	private String contentSummary;// summary on content
 
 	@Lob
 	@Column(nullable = false)
 	private String content;
 
-	@Column
+	@Column(name = "image_url")
 	@Nullable
 	private String imageUrl;
 
 	@Lob
-	@Column
+	@Column(name = "image_desc")
 	@Nullable
 	private String imageDesc;
 
 	@Nullable
 	private String writer;
 
-	@Column(nullable = false)
+	@Column(name = "is_deleted", nullable = false)
 	private Boolean isDeleted;
 }

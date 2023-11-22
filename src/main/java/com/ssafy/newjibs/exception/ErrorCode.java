@@ -24,7 +24,7 @@ public enum ErrorCode {
 	// news error code
 
 	// notice error code
-
+	NOTICE_NOT_FOUND(401, "공지사항을 찾을 수 없습니다."),
 	// crawler error code
 
 	// parser error code
