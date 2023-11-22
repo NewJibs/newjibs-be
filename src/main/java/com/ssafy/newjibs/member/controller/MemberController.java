@@ -25,7 +25,7 @@ import com.ssafy.newjibs.member.dto.MemberWithAuthDto;
 import com.ssafy.newjibs.member.dto.RankDto;
 import com.ssafy.newjibs.member.dto.RegisterDto;
 import com.ssafy.newjibs.member.service.MemberService;
-import com.ssafy.newjibs.utility.S3Service;
+import com.ssafy.newjibs.utility.service.S3Service;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
