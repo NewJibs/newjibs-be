@@ -3,8 +3,8 @@
         <img src="./assets/title.png" width="400" height="95" >
     </div>
 </a>
-
-<H2 style="text-align: center">MEMBER</H1>
+<div>
+<H2 style="text-align: center">MEMBER</H2>
 <div style="display:flex; justify-content: center">
 <div style="margin-right: 10px">
   <a href="https://github.com/takealook97">
@@ -18,6 +18,7 @@
         <img src="https://github.com/smarfy99.png/" width="150">
     </a>
     <div><H4 style="text-align: center">frontend: 정지원</H4></div>
+</div>
 </div>
 </div>
 
