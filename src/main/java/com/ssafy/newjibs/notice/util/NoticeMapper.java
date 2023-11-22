@@ -1,19 +1,19 @@
 package com.ssafy.newjibs.notice.util;
 
+import org.springframework.stereotype.Component;
+
 import com.ssafy.newjibs.notice.domain.Notice;
 import com.ssafy.newjibs.notice.dto.NoticeDto;
 import com.ssafy.newjibs.notice.dto.NoticeListDto;
 
-import org.springframework.stereotype.Component;
-
 @Component
 public class NoticeMapper {
-	public Notice toEntity(NoticeDto noticeDto) {
+	public Notice toEntity(NoticeDto noticeDto, String url) {
 		return Notice.builder()
 			.title(noticeDto.getTitle())
 			.author(noticeDto.getAuthor())
 			.content(noticeDto.getContent())
-			.imgUrl(noticeDto.getImgUrl())
+			.imageUrl(url)
 			.date(noticeDto.getDate())
 			.isDeleted(false)
 			.build();
@@ -24,7 +24,7 @@ public class NoticeMapper {
 			.title(notice.getTitle())
 			.author(notice.getAuthor())
 			.content(notice.getContent())
-			.imgUrl(notice.getImgUrl())
+			.imageUrl(notice.getImageUrl())
 			.date(notice.getDate())
 			.build();
 	}

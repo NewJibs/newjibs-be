@@ -23,8 +23,8 @@ public class NoticeDto {
     @JsonProperty("content")
     private String content;
 
-    @JsonProperty("imgUrl")
-    private String imgUrl;
+    @JsonProperty("imageUrl")
+    private String imageUrl;
 
     @JsonProperty("date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")

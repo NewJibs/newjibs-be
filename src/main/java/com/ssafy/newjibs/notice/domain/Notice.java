@@ -30,7 +30,7 @@ public class Notice {
     private String content;
 
     @Column
-    private String imgUrl;
+    private String imageUrl;
 
     @Column(nullable = false, columnDefinition = "DATETIME(0)")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
