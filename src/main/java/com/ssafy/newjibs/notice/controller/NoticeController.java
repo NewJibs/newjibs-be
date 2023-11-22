@@ -1,5 +1,6 @@
 package com.ssafy.newjibs.notice.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.newjibs.notice.dto.NoticeDto;
 import com.ssafy.newjibs.notice.dto.NoticeListDto;
@@ -29,8 +32,9 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항을 저장한다.")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PostMapping
-	public ResponseEntity<Void> saveNotice(@RequestBody NoticeDto noticeDto) {
-		noticeService.createNotice(noticeDto);
+	public ResponseEntity<Void> saveNotice(@RequestBody NoticeDto noticeDto,
+		@RequestPart(value = "image", required = false) MultipartFile multipartFile) throws IOException {
+		noticeService.createNotice(noticeDto, multipartFile);
 		return ResponseEntity.ok().build();
 	}
 
@@ -49,8 +53,9 @@ public class NoticeController {
 	@ApiOperation(value = "공지사항을 수정한다.")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/{noticeId}")
-	public ResponseEntity<Void> modifyNotice(@PathVariable Long noticeId, @RequestBody NoticeDto noticeDto) {
-		noticeService.updateNotice(noticeId, noticeDto);
+	public ResponseEntity<Void> modifyNotice(@PathVariable Long noticeId, @RequestBody NoticeDto noticeDto,
+		@RequestPart(value = "image", required = false) MultipartFile multipartFile) throws IOException {
+		noticeService.updateNotice(noticeId, noticeDto, multipartFile);
 		return ResponseEntity.ok().build();
 	}
 
