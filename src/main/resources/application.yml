@@ -7,10 +7,6 @@ spring:
     url: jdbc:mariadb://${DB_URL}:${DB_PORT}/${DB_NAME}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${MARIADB_USERNAME}
     password: ${MARIADB_PASSWORD}
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/newjibs?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-#    username: takealook
-#    password: '0205'
 
   mvc:
     pathmatch:
@@ -30,13 +26,11 @@ spring:
     defer-datasource-initialization: true
 
   redis:
-#    host: -- server address --
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
 
   sql:
     init:
-#      mode: never
       mode: always
 
   profiles:
