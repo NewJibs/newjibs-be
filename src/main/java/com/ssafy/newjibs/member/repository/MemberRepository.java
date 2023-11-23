@@ -29,9 +29,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 		"    WHERE ma = m AND adm.authorityName = 'ROLE_ADMIN'" +
 		") " +
 		"GROUP BY m " +
-		"HAVING COUNT(m) = 1 " +
-		"ORDER BY m.point DESC")
+		"ORDER BY m.point DESC " +
+		"LIMIT 10")
 	List<Member> findTop10MembersByPoint();
-
-
 }
