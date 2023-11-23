@@ -1,26 +1,23 @@
-<a href="https://newjibs.store">
-    <div style="display:flex;justify-content: center">
-        <img src="./assets/title.png" width="400" height="95" >
-    </div>
-</a>
-<div>
-<H2 style="text-align: center">MEMBER</H2>
-<div style="display:flex; justify-content: center">
-<div style="margin-right: 10px">
-  <a href="https://github.com/takealook97">
-      <img src="https://github.com/takealook97.png/" width="150">
+<p align="center">
+  <a href="https://newjibs.store">
+    <img src="./assets/title.png" width="400" height="95"  alt="logo">
   </a>
-  <div><H4 style="text-align: center">backend: 김건우</H4></div>
-</div>
+</p>
 
-<div>
-    <a href="https://github.com/smarfy99">
-        <img src="https://github.com/smarfy99.png/" width="150">
-    </a>
-    <div><H4 style="text-align: center">frontend: 정지원</H4></div>
-</div>
-</div>
-</div>
+<br>
+
+<p align="center">
+  <a href="https://github.com/takealook97">
+    <img src="https://github.com/takealook97.png/" width="150" alt="takealook97">
+  </a>
+  <a href="https://github.com/smarfy99">
+    <img src="https://github.com/smarfy99.png/" width="150" alt="smarfy99">
+  </a>
+  <br>
+  backend: 김건우 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; frontend: 정지원
+</p>
+
+<br>
 
 ## 🕊️ Deploy URL
 
@@ -75,13 +72,17 @@
 
 ## 🌐 Deploy Structure
 
-// 배포 구조 이미지 삽입
+<img src="./assets/server.png" width="700" alt="배포 구조 이미지">
 
 <br>
 
+## 🏗️ UML
+
+<img src="./assets/uml.png" width="700" alt="uml">
+
 ## 💾 ERD
 
-// ERD 이미지 삽입
+<img src="./assets/erd.png" width="700" alt="erd">
 
 <br>
 
@@ -89,17 +90,34 @@
 
 ### 🎯 회원
 
-- 로그인 관리는 기본적으로 JWT를 활용한다.
+💡 회원 관리는 기본적으로 Spring Security와 JWT를 활용
 - [x] 회원 가입
 - [x] 로그인 / 로그아웃
+- [x] 마이페이지
 - [x] 프로필 사진 업로드 / 삭제
-- [x] 회원 정보 조회
 - [x] 회원 탈퇴
 - [x] 랭킹 조회
 
 ### 🎯 부동산 (모의 투자)
 
-### 🎯 뉴스
+💡 카카오 맵 API를 활용하여 부동산 좌표 및 정보 출력
+- [x] 전체 좌표 정보 조회 (위경도, aptCode, 최소/최대 가격)
+- [x] 특정 좌표 조회 (거래 번호를 비롯한 해당 부동산의 상세 정보)
+- [x] 투자 결과 조회 (투자 후 수익 총량 출력 및 점수 반영)
 
 ### 🎯 공지사항
 
+💡 조회를 제외한 기능들은 관리자 권한이 필요
+- [x] 전체 공지사항 조회
+- [x] 공지사항 작성
+- [x] 특정 공지사항 조회
+- [x] 특정 공지사항 수정
+- [x] 특정 공지사항 삭제
+
+### 🎯 뉴스
+
+💡최신 네이버 부동산 뉴스 정보 제공
+- [x] 뉴스 크롤링 (1일, 지난 6일 -> 1주일 사전 적재)
+- [x] 뉴스 크롤링 스케쥴러 (랜덤한 매 5:30 ~ 6:30 마다 크롤링)
+- [x] 전체 뉴스 기사 조회
+- [x] 특정 뉴스 기사 조회
