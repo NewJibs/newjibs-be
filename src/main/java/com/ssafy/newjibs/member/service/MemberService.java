@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,7 +107,7 @@ public class MemberService {
 	}
 
 	public Map<Long, RankDto> getRanks() {
-		List<Member> topTenMembers = memberRepository.findTop10MembersByPoint();
+		List<Member> topTenMembers = memberRepository.findTop10MembersByPoint(PageRequest.of(0, 10));
 		Map<Long, RankDto> ranks = new LinkedHashMap<>();
 		long rank = 1;
 		for (Member member : topTenMembers) {
