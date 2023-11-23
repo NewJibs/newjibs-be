@@ -79,24 +79,19 @@
 <img src="./assets/service/main.png" width="700" alt="main">
 
 ### 회원가입 / 로그인
-<img src="./assets/service/sign-up.png" width="400" alt="sign-up">
-<img src="./assets/service/login.png" width="400" alt="login">
+<img src="./assets/service/sign-up.png" width="400" alt="sign-up"> <img src="./assets/service/login.png" width="400" alt="login">
 
 ### 지도
-<img src="./assets/service/map.png" width="400" alt="map">
-<img src="./assets/service/map-select.png" width="400" alt="map-select">
+<img src="./assets/service/map.png" width="400" alt="map"> <img src="./assets/service/map-select.png" width="400" alt="map-select">
 
 ### 결과 / 랭킹
-<img src="./assets/service/result.png" width="400" alt="result">
-<img src="./assets/service/rank.png" width="400" alt="rank">
+<img src="./assets/service/result.png" width="400" alt="result"> <img src="./assets/service/rank.png" width="400" alt="rank">
 
 ### 뉴스 / 상세보기
-<img src="./assets/service/news.png" width="400" alt="news">
-<img src="./assets/service/news-content.png" width="400" alt="news-content">
+<img src="./assets/service/news.png" width="400" alt="news"> <img src="./assets/service/news-content.png" width="400" alt="news-content">
 
 ### 공지사항 / 상세보기
-<img src="./assets/service/notice.png" width="400" alt="notice">
-<img src="./assets/service/notice-content.png" width="400" alt="notice-content">
+<img src="./assets/service/notice.png" width="400" alt="notice"> <img src="./assets/service/notice-content.png" width="400" alt="notice-content">
 
 
 <br>
