@@ -42,20 +42,18 @@ public class MemberController {
 	}
 
 	@ApiOperation(value = "프로필 사진 업로드")
-	@PostMapping("/{memberId}/profile")
+	@PostMapping("/profile")
 	@PreAuthorize("hasAnyRole('USER','ADMIN')")
-	public ResponseEntity<Void> uploadImage(@PathVariable Long memberId,
-		@RequestPart(value = "image", required = false) MultipartFile multipartFile) throws IOException {
-		String url = s3Service.uploadImage(multipartFile);
-		memberService.saveImageUrl(memberId, url);
+	public ResponseEntity<Void> uploadImage(@RequestPart(value = "image", required = false) MultipartFile multipartFile) throws IOException {
+		memberService.saveImageUrl(s3Service.uploadImage(multipartFile));
 		return ResponseEntity.ok().build();
 	}
 
 	@ApiOperation(value = "프로필 사진 삭제")
-	@DeleteMapping("/{memberId}/profile")
+	@DeleteMapping("/profile")
 	@PreAuthorize("hasAnyRole('USER','ADMIN')")
-	public ResponseEntity<Void> deleteImage(@PathVariable Long memberId) throws IOException {
-		memberService.deleteImageUrl(memberId);
+	public ResponseEntity<Void> deleteImage() {
+		memberService.deleteImageUrl();
 		return ResponseEntity.ok().build();
 	}
 
