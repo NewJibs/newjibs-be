@@ -33,7 +33,11 @@ public class HouseService {
 	}
 
 	public List<HouseDto> findHouseDtosByAptCode(Long aptCode) {
-		return houseRepository.findHouseDtosByAptCodeFor2020(aptCode);
+		List<HouseDto> result = houseRepository.findHouseDtosByAptCodeFor2020(aptCode);
+		if (result == null) {
+			throw new BaseException(ErrorCode.APT_CODE_NOT_FOUND);
+		}
+		return result;
 	}
 
 	public FinalResultDto findResultsByDealNo(List<Long> nos) {
@@ -42,6 +46,9 @@ public class HouseService {
 		for (Long no : nos) {
 			PriceChangeDto priceChangeDto = houseRepository.findPriceChangeByNo(no);
 			HouseInfoDto houseInfoDto = houseRepository.findHouseInfo(no);
+			if (priceChangeDto == null || houseInfoDto == null) {
+				throw new BaseException(ErrorCode.HOUSE_NOT_FOUND);
+			}
 			ResultDto resultDto = new ResultDto(priceChangeDto, houseInfoDto);
 			results.add(resultDto);
 
