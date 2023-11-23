@@ -4,7 +4,23 @@
   </a>
 </p>
 
+---
+## 📚 TOC
+- [DEPLOY URL](#-deploy-url)
+- [SPECIFICATION](#-specification)
+- [INTRODUCTION](#-introduction)
+- [SERVICE LAYOUT](#-service-layout)
+- [SKILLS](#-skills)
+- [DEPLOY STRUCTURE](#-deploy-structure)
+- [UML](#-uml)
+- [ERD](#-erd)
+- [FUNCTION](#-function)
+
 <br>
+
+---
+
+<H2 align="center">MEMBER</H2>
 
 <p align="center">
   <a href="https://github.com/takealook97">
@@ -19,6 +35,8 @@
 
 <br>
 
+---
+
 ## 🕊️ Deploy URL
 
 - ✅ front-server : https://newjibs.store
@@ -26,6 +44,13 @@
 - ✅ back-swagger : https://newjibs.shop/swagger-ui/
 
 <br>
+
+## 📝 Specification
+- notion : https://takealook97.notion.site/newjibs-5432f78d755c430c8d963b9056fba4f0?pvs=4
+
+<br>
+
+---
 
 ## 📢 Introduction
 
@@ -50,6 +75,8 @@
 
 
 <br>
+
+---
 
 ## 🛠️ Skills
 
@@ -78,6 +105,8 @@
 
 <br>
 
+---
+
 ## 🌐 Deploy Structure
 
 <img src="./assets/server.png" width="700" alt="배포 구조 이미지">
@@ -96,7 +125,9 @@
 
 <br>
 
-## ⚙️ function
+---
+
+## ⚙️ Function
 
 ### 🎯 회원
 
