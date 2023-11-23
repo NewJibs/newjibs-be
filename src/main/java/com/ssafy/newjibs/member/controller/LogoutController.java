@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -27,6 +28,7 @@ public class LogoutController {
 	private final TokenProvider tokenProvider;
 
 	@ApiOperation(value = "로그아웃")
+	@PreAuthorize("hasAnyRole('USER','ADMIN')")
 	@PostMapping("/logout")
 	public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
 		String authorizationHeader = request.getHeader(AUTHORIZATION_HEADER);
