@@ -27,7 +27,7 @@
 
 <br>
 
-## 🏠 Introduction
+## 📢 Introduction
 
 ### main-service
 
@@ -44,12 +44,19 @@
 
 <br>
 
+## 🏠 Service Layout
+
+// 시연 사진 페이지별로 추가 
+
+
+<br>
+
 ## 🛠️ Skills
 
 ### language
 
 - back : Java 8
-- front : Html, CSS, JavaScript
+- front : Html, CSS, JavaScript, TypeScript
 
 ### framework
 
