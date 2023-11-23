@@ -33,15 +33,19 @@ public class JwtFilter extends GenericFilterBean {
 	}
 
 	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws
-		IOException,
-		ServletException {
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+		throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest)servletRequest;
 		String jwt = resolveToken(httpServletRequest);
 		String requestURI = httpServletRequest.getRequestURI();
 
+		boolean hasJwt = StringUtils.hasText(jwt);
+		boolean tokenValid = tokenProvider.validateToken(jwt);
+		boolean isBlackListed = !redisService.isTokenBlacklisted(jwt);
+		logger.info(hasJwt + " " + tokenValid + " " + isBlackListed);
+
 		// save when token is valid and not on the blacklist
-		if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt) && !redisService.isTokenBlacklisted(jwt)) {
+		if (hasJwt && tokenValid && isBlackListed) {
 			Authentication authentication = tokenProvider.getAuthentication(jwt);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			logger.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
