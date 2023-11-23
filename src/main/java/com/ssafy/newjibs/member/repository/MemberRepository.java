@@ -3,6 +3,7 @@ package com.ssafy.newjibs.member.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -29,7 +30,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 		"    WHERE ma = m AND adm.authorityName = 'ROLE_ADMIN'" +
 		") " +
 		"GROUP BY m " +
-		"ORDER BY m.point DESC " +
-		"LIMIT 10")
-	List<Member> findTop10MembersByPoint();
+		"ORDER BY m.point DESC")
+	List<Member> findTop10MembersByPoint(Pageable pageable);
 }
