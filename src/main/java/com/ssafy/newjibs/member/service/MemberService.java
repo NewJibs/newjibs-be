@@ -79,8 +79,9 @@ public class MemberService {
 		return memberMapper.toInfoDto(member);
 	}
 
-	public void saveImageUrl(Long memberId, String url) {
-		Member member = memberRepository.findById(memberId)
+	public void saveImageUrl(String url) {
+		String email = SecurityUtil.getCurrentEmail().orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
 		if (member.getImageUrl() != null) {// if image already uploaded, delete image from s3
 			s3Service.deleteImageFromS3(member.getImageUrl());
@@ -88,8 +89,9 @@ public class MemberService {
 		member.setImageUrl(url);
 	}
 
-	public void deleteImageUrl(Long memberId) {
-		Member member = memberRepository.findById(memberId)
+	public void deleteImageUrl() {
+		String email = SecurityUtil.getCurrentEmail().orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
+		Member member = memberRepository.findByEmail(email)
 			.orElseThrow(() -> new BaseException(ErrorCode.MEMBER_NOT_FOUND));
 		String url = member.getImageUrl();
 		if (url == null) {

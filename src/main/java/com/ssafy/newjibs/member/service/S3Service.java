@@ -35,7 +35,7 @@ public class S3Service {
 	private String S3Bucket; // bucket name
 
 	public String uploadImage(MultipartFile multipartFile) throws IOException {
-		if (multipartFile.isEmpty()) {
+		if (multipartFile == null) {
 			throw new BaseException(ErrorCode.IMAGE_NULL_ERROR);
 		}
 		verifyFileType(multipartFile.getContentType());
