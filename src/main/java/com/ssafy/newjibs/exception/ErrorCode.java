@@ -10,7 +10,8 @@ public enum ErrorCode {
 	MEMBER_NOT_FOUND(401, "유저정보를 찾을 수 없습니다."),
 	DUPLICATED_EMAIL(409, "이미 가입되어있는 유저입니다."),
 	ADMIN_NOT_ALLOWED(403, "관리자의 정보는 볼 수 없습니다."),
-	// toekn error code
+
+	// token error code
 	TOKEN_FORBIDDEN(403, "token forbidden"),
 
 	// image error code
@@ -20,14 +21,14 @@ public enum ErrorCode {
 	SIZE_ERROR(400, "파일의 용량이 너무 큽니다."),
 
 	// house error code
+	APT_CODE_NOT_FOUND(401, "아파트코드(aptCode)를 찾을 수 없습니다."),
+	HOUSE_NOT_FOUND(401, "부동산 정보(no)를 찾을 수 없습니다."),
 
 	// news error code
+	NEWS_NOT_FOUND(401, "뉴스 정보를 찾을 수 없습니다."),
 
 	// notice error code
 	NOTICE_NOT_FOUND(401, "공지사항을 찾을 수 없습니다."),
-	// crawler error code
-
-	// parser error code
 
 	// === GLOBAL BASE ERROR CODE ===
 	// 4xx: Client Errors
